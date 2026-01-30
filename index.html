@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GMR Lorraine - Réservation Véhicules</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* THÈMES - Variables CSS */
+        :root {
+            /* Thème par défaut - Futuriste */
+            --bg-primary: #0a0e27;
+            --bg-secondary: #050816;
+            --card-bg: linear-gradient(135deg, rgba(255, 0, 255, 0.15), rgba(0, 240, 255, 0.15));
+            --border-color: rgba(0, 240, 255, 0.4);
+            --primary-color: #00f0ff;
+            --secondary-color: #b026ff;
+            --accent-color: #ff006e;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --shadow-color: rgba(0, 240, 255, 0.3);
+            --glow-color: rgba(0, 240, 255, 0.8);
+        }
+
+        /* Thème Modern Light */
+        [data-theme="modern-light"] {
+            --bg-primary: #f5f7fa;
+            --bg-secondary: #ffffff;
+            --card-bg: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(168, 85, 247, 0.05));
+            --border-color: rgba(99, 102, 241, 0.2);
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #ec4899;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --shadow-color: rgba(99, 102, 241, 0.15);
+            --glow-color: rgba(99, 102, 241, 0.4);
+        }
+
+        /* Thème Corporate Blue */
+        [data-theme="corporate"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --card-bg: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(14, 165, 233, 0.1));
+            --border-color: rgba(59, 130, 246, 0.3);
+            --primary-color: #3b82f6;
+            --secondary-color: #0ea5e9;
+            --accent-color: #06b6d4;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --shadow-color: rgba(59, 130, 246, 0.2);
+            --glow-color: rgba(59, 130, 246, 0.6);
+        }
+
+        /* Thème Nature Green */
+        [data-theme="nature"] {
+            --bg-primary: #064e3b;
+            --bg-secondary: #022c22;
+            --card-bg: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.15));
+            --border-color: rgba(16, 185, 129, 0.4);
+            --primary-color: #10b981;
+            --secondary-color: #059669;
+            --accent-color: #34d399;
+            --text-primary: #ecfdf5;
+            --text-secondary: #d1fae5;
+            --shadow-color: rgba(16, 185, 129, 0.25);
+            --glow-color: rgba(16, 185, 129, 0.7);
+        }
+
+        /* Thème Sunset Orange */
+        [data-theme="sunset"] {
+            --bg-primary: #1e1b4b;
+            --bg-secondary: #312e81;
+            --card-bg: linear-gradient(135deg, rgba(251, 146, 60, 0.15), rgba(239, 68, 68, 0.15));
+            --border-color: rgba(251, 146, 60, 0.4);
+            --primary-color: #fb923c;
+            --secondary-color: #f97316;
+            --accent-color: #ef4444;
+            --text-primary: #fef3c7;
+            --text-secondary: #fde68a;
+            --shadow-color: rgba(251, 146, 60, 0.3);
+            --glow-color: rgba(251, 146, 60, 0.8);
+        }
+
+        /* Thème Dark Elegant */
+        [data-theme="elegant"] {
+            --bg-primary: #18181b;
+            --bg-secondary: #09090b;
+            --card-bg: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(192, 192, 192, 0.08));
+            --border-color: rgba(212, 175, 55, 0.3);
+            --primary-color: #d4af37;
+            --secondary-color: #c0c0c0;
+            --accent-color: #fbbf24;
+            --text-primary: #fafafa;
+            --text-secondary: #d4d4d8;
+            --shadow-color: rgba(212, 175, 55, 0.2);
+            --glow-color: rgba(212, 175, 55, 0.6);
+        }
+
+        /* Thème Ocean Blue */
+        [data-theme="ocean"] {
+            --bg-primary: #082f49;
+            --bg-secondary: #0c4a6e;
+            --card-bg: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(6, 182, 212, 0.15));
+            --border-color: rgba(14, 165, 233, 0.4);
+            --primary-color: #0ea5e9;
+            --secondary-color: #06b6d4;
+            --accent-color: #22d3ee;
+            --text-primary: #e0f2fe;
+            --text-secondary: #bae6fd;
+            --shadow-color: rgba(14, 165, 233, 0.3);
+            --glow-color: rgba(14, 165, 233, 0.8);
+        }
+
+        /* Thème Purple Dream */
+        [data-theme="purple"] {
+            --bg-primary: #2e1065;
+            --bg-secondary: #1e1b4b;
+            --card-bg: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(147, 51, 234, 0.15));
+            --border-color: rgba(168, 85, 247, 0.4);
+            --primary-color: #a855f7;
+            --secondary-color: #9333ea;
+            --accent-color: #c084fc;
+            --text-primary: #faf5ff;
+            --text-secondary: #e9d5ff;
+            --shadow-color: rgba(168, 85, 247, 0.3);
+            --glow-color: rgba(168, 85, 247, 0.8);
+        }
+
+        /* Thème Rose Pink */
+        [data-theme="rose"] {
+            --bg-primary: #4c0519;
+            --bg-secondary: #881337;
+            --card-bg: linear-gradient(135deg, rgba(244, 63, 94, 0.15), rgba(236, 72, 153, 0.15));
+            --border-color: rgba(244, 63, 94, 0.4);
+            --primary-color: #f43f5e;
+            --secondary-color: #ec4899;
+            --accent-color: #fb7185;
+            --text-primary: #fff1f2;
+            --text-secondary: #fecdd3;
+            --shadow-color: rgba(244, 63, 94, 0.3);
+            --glow-color: rgba(244, 63, 94, 0.8);
+        }
+
+        /* Thème Minimal White */
+        [data-theme="minimal"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --card-bg: linear-gradient(135deg, rgba(17, 24, 39, 0.03), rgba(55, 65, 81, 0.03));
+            --border-color: rgba(17, 24, 39, 0.1);
+            --primary-color: #111827;
+            --secondary-color: #374151;
+            --accent-color: #6b7280;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --shadow-color: rgba(17, 24, 39, 0.1);
+            --glow-color: rgba(17, 24, 39, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 30%, var(--primary-color), transparent 50%),
+                radial-gradient(ellipse at 80% 70%, var(--secondary-color), transparent 50%),
+                radial-gradient(ellipse at 50% 50%, var(--accent-color), transparent 60%);
+            opacity: 0.15;
+            animation: gradientShift 20s ease infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { 
+                opacity: 0.15; 
+                transform: scale(1) rotate(0deg);
+            }
+            50% { 
+                opacity: 0.08; 
+                transform: scale(1.1) rotate(5deg);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Theme Switcher */
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 10px 40px var(--shadow-color);
+            transition: all 0.3s;
+        }
+
+        .theme-switcher:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px var(--shadow-color);
+        }
+
+        .theme-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .theme-btn:hover {
+            background: var(--card-bg);
+            transform: scale(1.1);
+        }
+
+        .theme-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 10px;
+            background: var(--bg-secondary);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 10px;
+            min-width: 220px;
+            box-shadow: 0 10px 40px var(--shadow-color);
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .theme-dropdown.active {
+            display: block;
+        }
+
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            margin: 5px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .theme-option:hover {
+            background: var(--card-bg);
+            border-color: var(--border-color);
+            transform: translateX(5px);
+        }
+
+        .theme-option.active {
+            background: var(--card-bg);
+            border-color: var(--primary-color);
+        }
+
+        .theme-color-preview {
+            display: flex;
+            gap: 4px;
+        }
+
+        .theme-color-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+        }
+
+        .theme-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            margin-bottom: 20px;
+            position: relative;
+            filter: drop-shadow(0 0 30px var(--glow-color));
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from { 
+                filter: drop-shadow(0 0 20px var(--glow-color));
+            }
+            to { 
+                filter: drop-shadow(0 0 40px var(--glow-color));
+            }
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            font-weight: 400;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px var(--glow-color);
+        }
+
+        /* Admin Button */
+        .admin-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 14px 30px;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--primary-color);
+            font-weight: 700;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            box-shadow: 0 0 30px var(--shadow-color);
+            backdrop-filter: blur(20px);
+        }
+
+        .admin-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px var(--glow-color);
+            border-color: var(--primary-color);
+            color: var(--text-primary);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        /* Vehicle Grid */
+        .vehicles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .vehicle-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(30px);
+            border-radius: 20px;
+            padding: 35px;
+            border: 2px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            box-shadow: 0 15px 45px var(--shadow-color);
+        }
+
+        .vehicle-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, var(--primary-color), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            0% { 
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.1;
+            }
+            100% { 
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        .vehicle-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--primary-color);
+            box-shadow: 0 25px 60px var(--shadow-color);
+        }
+
+        .vehicle-card:hover::before {
+            opacity: 0.15;
+        }
+
+        .vehicle-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .vehicle-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            filter: drop-shadow(0 0 15px var(--glow-color));
+        }
+
+        .vehicle-badge {
+            padding: 10px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary-color);
+            box-shadow: 0 0 20px var(--shadow-color);
+        }
+
+        .vehicle-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .info-item:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--glow-color);
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.2rem;
+        }
+
+        .reserve-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px var(--shadow-color);
+        }
+
+        .reserve-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 200%; }
+        }
+
+        .reserve-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px var(--glow-color);
+        }
+
+        .delete-vehicle-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #ff006e, #ff4757);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .delete-vehicle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 0, 110, 0.4);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            border: 2px solid var(--border-color);
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .modal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            color: var(--accent-color);
+            transform: rotate(90deg);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 15px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px var(--shadow-color);
+        }
+
+        .form-select {
+            cursor: pointer;
+        }
+
+        .form-select option {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--glow-color);
+        }
+
+        /* Section Title */
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin: 80px 0 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            position: relative;
+            padding-bottom: 25px;
+            filter: drop-shadow(0 0 25px var(--glow-color));
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), var(--secondary-color), var(--primary-color), transparent);
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+
+        /* Reservation Card */
+        .reservation-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(30px);
+            border-radius: 20px;
+            padding: 35px;
+            border: 2px solid var(--border-color);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 10px 40px var(--shadow-color);
+        }
+
+        .reservation-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 15px 50px var(--glow-color);
+            transform: translateY(-5px);
+        }
+
+        .reservation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .reservation-vehicle-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .vehicle-icon {
+            font-size: 3.5rem;
+            filter: drop-shadow(0 0 15px var(--glow-color));
+        }
+
+        .vehicle-details h3 {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+        }
+
+        .vehicle-plate {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            letter-spacing: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .reservation-status {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.25), rgba(0, 255, 136, 0.25));
+            border: 2px solid rgba(57, 255, 20, 0.7);
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #39ff14;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 25px rgba(57, 255, 20, 0.5);
+        }
+
+        .reservation-body {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .reservation-info-block h4 {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .reservation-info-block p {
+            color: var(--text-primary);
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        .time-range {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .time-arrow {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.5rem;
+        }
+
+        .reservation-destination {
+            grid-column: 1 / -1;
+        }
+
+        .reservation-actions {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .unlock-btn {
+            padding: 16px 32px;
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.25), rgba(255, 71, 87, 0.25));
+            border: 2px solid rgba(255, 0, 110, 0.6);
+            border-radius: 12px;
+            color: #ff4757;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        .unlock-btn:hover {
+            background: linear-gradient(135deg, #ff006e, #ff4757);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 35px rgba(255, 0, 110, 0.6);
+            border-color: rgba(255, 0, 110, 1);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: var(--primary-color);
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        /* Time Slots */
+        .time-slots-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .time-slot {
+            padding: 12px;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .time-slot:hover:not(.occupied):not(.disabled) {
+            background: var(--card-bg);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .time-slot.selected {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-color: var(--secondary-color);
+            color: white;
+        }
+
+        .time-slot.occupied {
+            background: rgba(255, 0, 110, 0.1);
+            border-color: rgba(255, 0, 110, 0.3);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .time-slot.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Admin Panel Styles */
+        .admin-vehicles-list {
+            display: grid;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .vehicles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+
+            .admin-btn {
+                top: 10px;
+                right: 10px;
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+
+            .theme-switcher {
+                top: 80px;
+                left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Switcher -->
+    <div class="theme-switcher">
+        <button class="theme-btn" onclick="toggleThemeDropdown()">🎨</button>
+        <div class="theme-dropdown" id="themeDropdown">
+            <div class="theme-option active" data-theme="futuriste" onclick="changeTheme('futuriste')">
+                <div class="theme-color-preview">
+                    <div class="theme-color-dot" style="background: #00f0ff;"></div>
+                    <div class="theme-color-dot" style="background: #b026ff;"></div>
+                    <div class="theme-color-dot" style="background: #ff006e;"></div>
+                </div>
+                <span class="theme-name">Futuriste</span>
+            </div>
+            <div class="theme-option" data-theme="modern-light" onclick="changeTheme('modern-light')">
+                <div class="theme-color-preview">
+                    <div class="theme-color-dot" style="background: #6366f1;"></div>
+                    <div class="theme-color-dot" style="background: #8b5cf6;"></div>
+                    <div class="theme-color-dot" style="background: #ec4899;"></div>
+                </div>
+                <span class="theme-name">Modern Light</span>
+            </div>
+            <div class="theme-option" data-theme="corporate" onclick="changeTheme('corporate')">
+                <div class="theme-color-preview">
+                    <div class="theme-color-dot" style="background: #3b82f6;"></div>
+                    <div class="theme-color-dot" style="background: #0ea5e9;"></div>
+                    <div class="theme-color-dot" style="background: #06b6d4;"></div>
+                </div>
+                <span class="theme-name">Corporate Blue</span>
+            </div>
+            <div class="theme-option" data-theme="nature" onclick="changeTheme('nature')">
+                <div class="theme-color-preview">
+                    <div class="theme-color-dot" style="background: #10b981;"></div>
+                    <div class="theme-color-dot" style="background: #059669;"></div>
+                    <div class="theme-color-dot" style="background: #34d399;"></div>
+                </div>
+                <span class="theme-name">Nature Green</span>
+            </div>
+            <div class="theme-option" data-theme="sunset" onclick="changeTheme('sunset')">
+                <div class="theme-color-preview">
+                    <div class="theme-color-dot" style="background: #fb923c;"></div>
+                    <div class="theme-color-dot" style="background: #f97316;"></div>
+                    <div class="theme-color-dot" style="background: #ef4444;"></div>
+                </div>
+                <span class="theme-name">Sunset Orange</span>
+            </div>
+            <div class="theme-option" data-theme="elegant" onclick="changeTheme('elegant')">
+                <div class="theme-color-preview">
+                    <div class="theme-color-dot" style="background: #d4af37;"></div>
+                    <div class="theme-color-dot" style="background: #c0c0c0;"></div>
+                    <div class="theme-color-dot" style="background: #fbbf24;"></div>
+                </div>
+                <span class="theme-name">Dark Elegant</span>
+            </div>
+            <div class="theme-option" data-theme="ocean" onclick="changeTheme('ocean')">
+                <div class="theme-color-preview">
+                    <div class="theme-color-dot" style="background: #0ea5e9;"></div>
+                    <div class="theme-color-dot" style="background: #06b6d4;"></div>
+                    <div class="theme-color-dot" style="background: #22d3ee;"></div>
+                </div>
+                <span class="theme-name">Ocean Blue</span>
+            </div>
+            <div class="theme-option" data-theme="purple" onclick="changeTheme('purple')">
+                <div class="theme-color-preview">
+                    <div class="theme-color-dot" style="background: #a855f7;"></div>
+                    <div class="theme-color-dot" style="background: #9333ea;"></div>
+                    <div class="theme-color-dot" style="background: #c084fc;"></div>
+                </div>
+                <span class="theme-name">Purple Dream</span>
+            </div>
+            <div class="theme-option" data-theme="rose" onclick="changeTheme('rose')">
+                <div class="theme-color-preview">
+                    <div class="theme-color-dot" style="background: #f43f5e;"></div>
+                    <div class="theme-color-dot" style="background: #ec4899;"></div>
+                    <div class="theme-color-dot" style="background: #fb7185;"></div>
+                </div>
+                <span class="theme-name">Rose Pink</span>
+            </div>
+            <div class="theme-option" data-theme="minimal" onclick="changeTheme('minimal')">
+                <div class="theme-color-preview">
+                    <div class="theme-color-dot" style="background: #111827;"></div>
+                    <div class="theme-color-dot" style="background: #374151;"></div>
+                    <div class="theme-color-dot" style="background: #6b7280;"></div>
+                </div>
+                <span class="theme-name">Minimal White</span>
+            </div>
+        </div>
+    </div>
+
+    <button class="admin-btn" onclick="openAdminPanel()">⚙️ Admin</button>
+
+    <div class="container">
+        <header>
+            <h1>GMR Lorraine</h1>
+            <div class="subtitle">Système de Réservation de Véhicules</div>
+        </header>
+
+        <div id="vehiclesGrid" class="vehicles-grid"></div>
+
+        <h2 class="section-title">📋 Réservations Actives</h2>
+        <div id="reservationsTimeline">
+            <div class="loading active">Chargement des réservations...</div>
+        </div>
+    </div>
+
+    <!-- Modal Admin Login -->
+    <div id="adminLoginModal" class="modal">
+        <div class="modal-content" style="max-width: 420px;">
+            <div class="modal-header" style="flex-direction: column; align-items: center; text-align: center; margin-bottom: 40px;">
+                <h2 class="modal-title" style="font-size: 2.5rem; margin-bottom: 10px;">ACCÈS ADMIN</h2>
+                <p style="color: var(--text-secondary); font-size: 0.95rem;">Authentification Requise</p>
+            </div>
+            
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <input type="password" id="adminPassword" class="form-input" required 
+                           placeholder="Mot de passe"
+                           style="text-align: center; font-size: 1.1rem;">
+                </div>
+                <button type="submit" class="submit-btn">SE CONNECTER</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Admin Panel -->
+    <div id="adminPanelModal" class="modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">
+                <h2 class="modal-title">GESTION DES VÉHICULES</h2>
+                <button class="close-btn" onclick="closeAdminPanel()">×</button>
+            </div>
+            
+            <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 15px; padding: 30px; margin-bottom: 40px;">
+                <h3 style="color: var(--primary-color); margin-bottom: 25px; font-size: 1.4rem;">AJOUTER UN VÉHICULE</h3>
+                
+                <form id="addVehicleForm">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div class="form-group">
+                            <label class="form-label">Nom du véhicule</label>
+                            <input type="text" id="vehicleName" class="form-input" required placeholder="Ex: Duster">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Plaque</label>
+                            <input type="text" id="vehiclePlate" class="form-input" required placeholder="Ex: FL024LX">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Places</label>
+                            <input type="number" id="vehicleSeats" class="form-input" required min="1" max="9" placeholder="5">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Type</label>
+                            <select id="vehicleType" class="form-select" required>
+                                <option value="">Sélectionner...</option>
+                                <option value="Électrique">⚡ Électrique</option>
+                                <option value="Diesel">⛽ Diesel</option>
+                                <option value="Essence">🔥 Essence</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn" style="margin-top: 25px;">
+                        AJOUTER LE VÉHICULE
+                    </button>
+                </form>
+            </div>
+
+            <div>
+                <h3 style="color: var(--primary-color); margin-bottom: 25px; font-size: 1.4rem;">VÉHICULES ACTUELS</h3>
+                <div id="adminVehiclesList" class="admin-vehicles-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Réservation -->
+    <div id="reservationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Réserver un véhicule</h2>
+                <button class="close-btn" onclick="closeModal()">×</button>
+            </div>
+            <form id="reservationForm">
+                <div class="form-group">
+                    <label class="form-label">Nom du salarié</label>
+                    <input type="text" id="employeeName" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Date</label>
+                    <input type="date" id="reservationDate" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Heure de départ</label>
+                    <div id="startTimeSlots" class="time-slots-container"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Heure de retour</label>
+                    <div id="endTimeSlots" class="time-slots-container"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Destination</label>
+                    <input type="text" id="destination" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Motif (optionnel)</label>
+                    <input type="text" id="motif" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Mot de passe de protection</label>
+                    <input type="password" id="protectionPassword" class="form-input" required 
+                           placeholder="Créez un mot de passe pour cette réservation">
+                </div>
+                <button type="submit" class="submit-btn">Confirmer la réservation</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Déverrouillage -->
+    <div id="unlockModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">🔓 Déverrouiller</h2>
+                <button class="close-btn" onclick="closeUnlockModal()">×</button>
+            </div>
+            <form id="unlockForm">
+                <div class="form-group">
+                    <label class="form-label">Entrez le mot de passe de protection</label>
+                    <input type="password" id="unlockPassword" class="form-input" required>
+                </div>
+                <button type="submit" class="submit-btn">Supprimer la réservation</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js';
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js';
+
+        // Configuration Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDDFzYGVZXmJOWy7XIOO4CmBfPvlJsWFCs",
+            authDomain: "rte-reservation-vehicule.firebaseapp.com",
+            projectId: "rte-reservation-vehicule",
+            storageBucket: "rte-reservation-vehicule.firebasestorage.app",
+            messagingSenderId: "56823546993",
+            appId: "1:56823546993:web:b1e54fbbc9fe99f5b907d0"
+        };
+
+        // Initialisation Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Variables globales
+        let vehicles = [];
+        const ADMIN_PASSWORD_HASH = "7c3504aefae880c790748706f3da821868a943e8fc411760f92e4631e9a1064c";
+
+        // Générer les créneaux horaires
+        const timeSlots = [];
+        for (let i = 7; i <= 20; i++) {
+            timeSlots.push(`${i.toString().padStart(2, '0')}:00`);
+        }
+
+        let selectedVehicle = null;
+        let selectedStartTime = null;
+        let selectedEndTime = null;
+        let currentReservations = [];
+        let currentUnlockReservation = null;
+        let selectedDate = null;
+
+        // Theme Management
+        window.toggleThemeDropdown = function() {
+            const dropdown = document.getElementById('themeDropdown');
+            dropdown.classList.toggle('active');
+        };
+
+        window.changeTheme = function(themeName) {
+            // Remove all theme options active class
+            document.querySelectorAll('.theme-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            
+            // Add active class to selected theme
+            document.querySelector(`[data-theme="${themeName}"]`).classList.add('active');
+            
+            // Apply theme
+            if (themeName === 'futuriste') {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                document.documentElement.setAttribute('data-theme', themeName);
+            }
+            
+            // Save theme preference
+            localStorage.setItem('selectedTheme', themeName);
+            
+            // Close dropdown
+            document.getElementById('themeDropdown').classList.remove('active');
+        };
+
+        // Load saved theme on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('selectedTheme') || 'futuriste';
+            changeTheme(savedTheme);
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const themeSwitcher = document.querySelector('.theme-switcher');
+            if (!themeSwitcher.contains(e.target)) {
+                document.getElementById('themeDropdown').classList.remove('active');
+            }
+        });
+
+        // Hash simple pour le mot de passe
+        async function hashPassword(password) {
+            const msgBuffer = new TextEncoder().encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // Charger les véhicules depuis Firestore
+        async function loadVehicles() {
+            try {
+                const querySnapshot = await getDocs(collection(db, 'vehicles'));
+                vehicles = [];
+                querySnapshot.forEach((doc) => {
+                    vehicles.push({ id: doc.id, ...doc.data() });
+                });
+                
+                if (vehicles.length === 0) {
+                    await initializeDefaultVehicles();
+                }
+                
+                displayVehicles();
+            } catch (error) {
+                console.error('Erreur:', error);
+            }
+        }
+
+        // Initialiser les véhicules par défaut
+        async function initializeDefaultVehicles() {
+            const defaultVehicles = [
+                { name: 'Duster', plate: 'FL024LX', seats: 2, type: 'Diesel', icon: '🚙' },
+                { name: 'Mégane', plate: 'HC453LH', seats: 5, type: 'Électrique', icon: '⚡' },
+                { name: 'Corolla', plate: 'FX466BC', seats: 5, type: 'Essence', icon: '🚗' }
+            ];
+
+            for (const vehicle of defaultVehicles) {
+                await addDoc(collection(db, 'vehicles'), vehicle);
+            }
+            
+            await loadVehicles();
+        }
+
+        // Récupérer les créneaux occupés
+        function getOccupiedSlots(vehicleId, date) {
+            const occupiedSlots = [];
+            
+            currentReservations
+                .filter(res => res.vehicleId === vehicleId && res.date === date)
+                .forEach(res => {
+                    const startHour = parseInt(res.startTime.split(':')[0]);
+                    const endHour = parseInt(res.endTime.split(':')[0]);
+                    
+                    for (let h = startHour; h < endHour; h++) {
+                        occupiedSlots.push(`${h.toString().padStart(2, '0')}:00`);
+                    }
+                });
+            
+            return occupiedSlots;
+        }
+
+        // Afficher les véhicules
+        function displayVehicles() {
+            const grid = document.getElementById('vehiclesGrid');
+            grid.innerHTML = vehicles.map(vehicle => {
+                return `
+                <div class="vehicle-card" onclick="openReservationModal('${vehicle.id}')">
+                    <div class="vehicle-header">
+                        <div class="vehicle-name">${vehicle.icon || '🚗'} ${vehicle.name}</div>
+                        <div class="vehicle-badge">${vehicle.type}</div>
+                    </div>
+                    <div class="vehicle-info">
+                        <div class="info-item">
+                            <div>
+                                <div class="info-label">Plaque</div>
+                                <div class="info-value">${vehicle.plate}</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div>
+                                <div class="info-label">Places</div>
+                                <div class="info-value">${vehicle.seats}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="reserve-btn">✅ Réserver</button>
+                </div>
+            `;
+            }).join('');
+        }
+
+        // Afficher les véhicules dans le panel admin
+        function displayAdminVehicles() {
+            const list = document.getElementById('adminVehiclesList');
+            list.innerHTML = vehicles.map(vehicle => `
+                <div class="vehicle-card">
+                    <div class="vehicle-header">
+                        <div class="vehicle-name">${vehicle.icon || '🚗'} ${vehicle.name}</div>
+                        <div class="vehicle-badge">${vehicle.type}</div>
+                    </div>
+                    <div class="vehicle-info">
+                        <div class="info-item">
+                            <div>
+                                <div class="info-label">Plaque</div>
+                                <div class="info-value">${vehicle.plate}</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div>
+                                <div class="info-label">Places</div>
+                                <div class="info-value">${vehicle.seats}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="delete-vehicle-btn" onclick="deleteVehicle('${vehicle.id}')">🗑️ Supprimer</button>
+                </div>
+            `).join('');
+        }
+
+        // Ouvrir le modal de login admin
+        window.openAdminPanel = function() {
+            document.getElementById('adminLoginModal').classList.add('active');
+        };
+
+        // Fermer le modal de login admin
+        window.closeAdminLoginModal = function() {
+            document.getElementById('adminLoginModal').classList.remove('active');
+            document.getElementById('adminLoginForm').reset();
+        };
+
+        // Connexion admin
+        document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const password = document.getElementById('adminPassword').value;
+            const hashedPassword = await hashPassword(password);
+            
+            if (hashedPassword !== ADMIN_PASSWORD_HASH) {
+                alert('Mot de passe incorrect !');
+                return;
+            }
+            
+            closeAdminLoginModal();
+            document.getElementById('adminPanelModal').classList.add('active');
+            displayAdminVehicles();
+        });
+
+        // Fermer le panel admin
+        window.closeAdminPanel = function() {
+            document.getElementById('adminPanelModal').classList.remove('active');
+            document.getElementById('addVehicleForm').reset();
+        };
+
+        // Ajouter un véhicule
+        document.getElementById('addVehicleForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const icons = {
+                'Électrique': '⚡',
+                'Diesel': '⛽',
+                'Essence': '🔥'
+            };
+            
+            const type = document.getElementById('vehicleType').value;
+            const newVehicle = {
+                name: document.getElementById('vehicleName').value,
+                plate: document.getElementById('vehiclePlate').value.toUpperCase(),
+                seats: parseInt(document.getElementById('vehicleSeats').value),
+                type: type,
+                icon: icons[type] || '🚗'
+            };
+            
+            try {
+                await addDoc(collection(db, 'vehicles'), newVehicle);
+                document.getElementById('addVehicleForm').reset();
+                await loadVehicles();
+                displayAdminVehicles();
+                alert('Véhicule ajouté avec succès !');
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de l\'ajout : ' + error.message);
+            }
+        });
+
+        // Supprimer un véhicule
+        window.deleteVehicle = async function(vehicleId) {
+            if (!confirm('Êtes-vous sûr de vouloir supprimer ce véhicule ?')) {
+                return;
+            }
+            
+            try {
+                await deleteDoc(doc(db, 'vehicles', vehicleId));
+                await loadVehicles();
+                displayAdminVehicles();
+                alert('Véhicule supprimé !');
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la suppression : ' + error.message);
+            }
+        };
+
+        // Ouvrir le modal de réservation
+        window.openReservationModal = function(vehicleId) {
+            selectedVehicle = vehicles.find(v => v.id === vehicleId);
+            document.getElementById('reservationModal').classList.add('active');
+            
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('reservationDate').value = today;
+            document.getElementById('reservationDate').min = today;
+            
+            selectedDate = today;
+            generateTimeSlots();
+            updateTimeSlots();
+        };
+
+        // Générer les créneaux horaires
+        function generateTimeSlots() {
+            const startContainer = document.getElementById('startTimeSlots');
+            const endContainer = document.getElementById('endTimeSlots');
+            
+            startContainer.innerHTML = timeSlots.map(time => 
+                `<div class="time-slot" onclick="selectStartTime('${time}')">${time}</div>`
+            ).join('');
+            
+            endContainer.innerHTML = timeSlots.map(time => 
+                `<div class="time-slot" onclick="selectEndTime('${time}')">${time}</div>`
+            ).join('');
+        }
+
+        // Mettre à jour les créneaux disponibles
+        function updateTimeSlots() {
+            if (!selectedVehicle || !selectedDate) return;
+            
+            const occupiedSlots = getOccupiedSlots(selectedVehicle.id, selectedDate);
+            
+            const startSlots = document.querySelectorAll('#startTimeSlots .time-slot');
+            startSlots.forEach(slot => {
+                const time = slot.textContent;
+                slot.classList.remove('occupied', 'disabled', 'selected');
+                
+                if (occupiedSlots.includes(time)) {
+                    slot.classList.add('occupied');
+                }
+            });
+            
+            updateEndTimeSlots();
+        }
+
+        // Mettre à jour les créneaux de fin
+        function updateEndTimeSlots() {
+            if (!selectedVehicle || !selectedDate) return;
+            
+            const occupiedSlots = getOccupiedSlots(selectedVehicle.id, selectedDate);
+            const endSlots = document.querySelectorAll('#endTimeSlots .time-slot');
+            
+            endSlots.forEach(slot => {
+                const time = slot.textContent;
+                slot.classList.remove('occupied', 'disabled', 'selected');
+                
+                if (!selectedStartTime) {
+                    slot.classList.add('disabled');
+                    return;
+                }
+                
+                const currentHour = parseInt(time.split(':')[0]);
+                const startHour = parseInt(selectedStartTime.split(':')[0]);
+                
+                if (currentHour <= startHour) {
+                    slot.classList.add('disabled');
+                    return;
+                }
+                
+                for (let h = startHour; h < currentHour; h++) {
+                    const checkTime = `${h.toString().padStart(2, '0')}:00`;
+                    if (occupiedSlots.includes(checkTime)) {
+                        slot.classList.add('disabled');
+                        return;
+                    }
+                }
+            });
+        }
+
+        // Sélectionner l'heure de départ
+        window.selectStartTime = function(time) {
+            const slot = Array.from(document.querySelectorAll('#startTimeSlots .time-slot'))
+                .find(s => s.textContent === time);
+            
+            if (slot.classList.contains('occupied')) {
+                alert('Ce créneau n\'est pas disponible');
+                return;
+            }
+            
+            selectedStartTime = time;
+            selectedEndTime = null;
+            
+            document.querySelectorAll('#startTimeSlots .time-slot').forEach(s => {
+                s.classList.remove('selected');
+            });
+            slot.classList.add('selected');
+            
+            document.querySelectorAll('#endTimeSlots .time-slot').forEach(s => {
+                s.classList.remove('selected');
+            });
+            
+            updateEndTimeSlots();
+        };
+
+        // Sélectionner l'heure de retour
+        window.selectEndTime = function(time) {
+            const slot = Array.from(document.querySelectorAll('#endTimeSlots .time-slot'))
+                .find(s => s.textContent === time);
+            
+            if (slot.classList.contains('disabled') || slot.classList.contains('occupied')) {
+                alert('Ce créneau n\'est pas disponible');
+                return;
+            }
+            
+            if (time <= selectedStartTime) {
+                alert('L\'heure de retour doit être après l\'heure de départ');
+                return;
+            }
+            
+            selectedEndTime = time;
+            document.querySelectorAll('#endTimeSlots .time-slot').forEach(s => {
+                s.classList.remove('selected');
+            });
+            slot.classList.add('selected');
+        };
+
+        // Changement de date
+        document.addEventListener('DOMContentLoaded', () => {
+            const dateInput = document.getElementById('reservationDate');
+            if (dateInput) {
+                dateInput.addEventListener('change', (e) => {
+                    selectedDate = e.target.value;
+                    selectedStartTime = null;
+                    selectedEndTime = null;
+                    updateTimeSlots();
+                });
+            }
+        });
+
+        // Fermer le modal
+        window.closeModal = function() {
+            document.getElementById('reservationModal').classList.remove('active');
+            document.getElementById('reservationForm').reset();
+            selectedVehicle = null;
+            selectedStartTime = null;
+            selectedEndTime = null;
+            selectedDate = null;
+        };
+
+        // Soumettre la réservation
+        document.getElementById('reservationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!selectedStartTime || !selectedEndTime) {
+                alert('Veuillez sélectionner les heures de départ et de retour');
+                return;
+            }
+
+            const password = document.getElementById('protectionPassword').value;
+            const hashedPassword = await hashPassword(password);
+            
+            const reservation = {
+                vehicleId: selectedVehicle.id,
+                vehicleName: selectedVehicle.name,
+                vehiclePlate: selectedVehicle.plate,
+                vehicleIcon: selectedVehicle.icon,
+                employeeName: document.getElementById('employeeName').value,
+                date: selectedDate,
+                startTime: selectedStartTime,
+                endTime: selectedEndTime,
+                destination: document.getElementById('destination').value,
+                motif: document.getElementById('motif').value || '',
+                passwordHash: hashedPassword,
+                createdAt: new Date().toISOString()
+            };
+
+            try {
+                await addDoc(collection(db, 'reservations'), reservation);
+                closeModal();
+                await loadReservations();
+                alert(`Réservation confirmée ! ${selectedVehicle.name} est réservé de ${selectedStartTime} à ${selectedEndTime}.`);
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la réservation : ' + error.message);
+            }
+        });
+
+        // Charger les réservations
+        async function loadReservations() {
+            const timeline = document.getElementById('reservationsTimeline');
+            const loading = timeline.querySelector('.loading');
+            
+            try {
+                if (loading) {
+                    loading.classList.add('active');
+                }
+                
+                const q = query(collection(db, 'reservations'), orderBy('date', 'desc'));
+                const querySnapshot = await getDocs(q);
+                
+                if (loading) {
+                    loading.classList.remove('active');
+                }
+                
+                currentReservations = [];
+                querySnapshot.forEach((doc) => {
+                    currentReservations.push({ id: doc.id, ...doc.data() });
+                });
+
+                currentReservations.sort((a, b) => {
+                    if (a.date !== b.date) {
+                        return b.date.localeCompare(a.date);
+                    }
+                    return b.startTime.localeCompare(a.startTime);
+                });
+
+                if (currentReservations.length === 0) {
+                    timeline.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📭</div>
+                            <div>Aucune réservation pour le moment</div>
+                        </div>
+                    `;
+                    displayVehicles();
+                    return;
+                }
+
+                timeline.innerHTML = currentReservations.map(res => `
+                    <div class="reservation-card">
+                        <div class="reservation-header">
+                            <div class="reservation-vehicle-info">
+                                <div class="vehicle-icon">${res.vehicleIcon}</div>
+                                <div class="vehicle-details">
+                                    <h3>${res.vehicleName}</h3>
+                                    <span class="vehicle-plate">${res.vehiclePlate}</span>
+                                </div>
+                            </div>
+                            <div class="reservation-status">ACTIVE</div>
+                        </div>
+                        <div class="reservation-body">
+                            <div class="reservation-info-block">
+                                <h4>Salarié</h4>
+                                <p>${res.employeeName}</p>
+                            </div>
+                            <div class="reservation-info-block">
+                                <h4>Date</h4>
+                                <p>${formatDate(res.date)}</p>
+                            </div>
+                            <div class="reservation-info-block">
+                                <h4>Horaires</h4>
+                                <div class="time-range">
+                                    <span>${res.startTime}</span>
+                                    <span class="time-arrow">→</span>
+                                    <span>${res.endTime}</span>
+                                </div>
+                            </div>
+                            <div class="reservation-info-block reservation-destination">
+                                <h4>Destination</h4>
+                                <p>${res.destination}</p>
+                            </div>
+                            ${res.motif ? `
+                            <div class="reservation-info-block">
+                                <h4>Motif</h4>
+                                <p>${res.motif}</p>
+                            </div>
+                            ` : ''}
+                        </div>
+                        <div class="reservation-actions">
+                            <button class="unlock-btn" onclick="openUnlockModal('${res.id}')">
+                                Déverrouiller & Supprimer
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+
+                displayVehicles();
+            } catch (error) {
+                console.error('Erreur:', error);
+                timeline.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <div>Erreur de chargement : ${error.message}</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Ouvrir le modal de déverrouillage
+        window.openUnlockModal = function(reservationId) {
+            currentUnlockReservation = currentReservations.find(r => r.id === reservationId);
+            document.getElementById('unlockModal').classList.add('active');
+            document.getElementById('unlockPassword').value = '';
+        };
+
+        // Fermer le modal de déverrouillage
+        window.closeUnlockModal = function() {
+            document.getElementById('unlockModal').classList.remove('active');
+            currentUnlockReservation = null;
+        };
+
+        // Soumettre le déverrouillage
+        document.getElementById('unlockForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const password = document.getElementById('unlockPassword').value;
+            const hashedPassword = await hashPassword(password);
+            
+            if (hashedPassword !== currentUnlockReservation.passwordHash) {
+                alert('Mot de passe incorrect !');
+                return;
+            }
+            
+            try {
+                await deleteDoc(doc(db, 'reservations', currentUnlockReservation.id));
+                closeUnlockModal();
+                await loadReservations();
+                alert('Réservation supprimée ! Les créneaux sont maintenant disponibles.');
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la suppression : ' + error.message);
+            }
+        });
+
+        // Formater la date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('fr-FR', { 
+                weekday: 'long',
+                day: '2-digit', 
+                month: 'long', 
+                year: 'numeric' 
+            });
+        }
+
+        // Initialisation
+        loadVehicles();
+        loadReservations();
+        
+        // Rafraîchir les réservations toutes les 30 secondes
+        setInterval(loadReservations, 30000);
+    </script>
+</body>
+</html>
