@@ -758,7 +758,7 @@
 
         // Variables globales
         let vehicles = [];
-        const ADMIN_PASSWORD_HASH = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"; // "password"
+        const ADMIN_PASSWORD_HASH = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"; // "AdminVoiture"
 
         // Générer les créneaux horaires (7h à 20h)
         const timeSlots = [];
@@ -907,7 +907,12 @@
         document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const password = document.getElementById('adminPassword').value;
+            const password
+                
+                
+                
+                
+    = document.getElementById('adminPassword').value;
             const hashedPassword = await hashPassword(password);
             
             if (hashedPassword !== ADMIN_PASSWORD_HASH) {
