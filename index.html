@@ -1613,7 +1613,7 @@
                 return `
                 <div class="vehicle-card" onclick="openReservationModal('${vehicle.id}')">
                     <div class="vehicle-header">
-                        <div class="vehicle-name">${vehicle.icon || '🚗'} ${vehicle.name}</div>
+                        <div class="vehicle-name">${vehicle.icon || ''} ${vehicle.name}</div>
                         <div class="vehicle-badge">${vehicle.type}</div>
                     </div>
                     <div class="vehicle-info">
@@ -1714,7 +1714,7 @@
                 plate: document.getElementById('vehiclePlate').value.toUpperCase(),
                 seats: parseInt(document.getElementById('vehicleSeats').value),
                 type: type,
-                icon: icons[type] || '🚗'
+                icon: icons[type] || ''
             };
             
             try {
