@@ -1451,7 +1451,13 @@
 
         // ============= SYSTÈME DE NOTIFICATIONS =============
         function showNotification(type, title, message) {
-            const container = document.getElementById('notificationContainer');
+            // Vérifier que le DOM est chargé
+            let container = document.getElementById('notificationContainer');
+            if (!container) {
+                console.warn('Container de notifications pas encore chargé');
+                return;
+            }
+            
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
             
