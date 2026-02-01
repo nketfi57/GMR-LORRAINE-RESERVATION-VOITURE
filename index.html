@@ -4,2267 +4,1870 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GMR Lorraine - Réservation Véhicules</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
+        /* ============================================================
+           RESET & BASE
+           ============================================================ */
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* THÈMES AMÉLIORÉS - Variables CSS */
+        /* ============================================================
+           THEME SYSTEM — 7 refined professional palettes
+           ============================================================ */
         :root {
-            /* Thème Corporate Professional (par défaut) */
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-tertiary: #334155;
-            --card-bg: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(99, 102, 241, 0.08));
-            --border-color: rgba(148, 163, 184, 0.2);
-            --primary-color: #3b82f6;
-            --secondary-color: #6366f1;
-            --accent-color: #8b5cf6;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --shadow-color: rgba(59, 130, 246, 0.15);
-            --glow-color: rgba(59, 130, 246, 0.5);
+            /* ── Corporate Steel (default) ── */
+            --bg-primary:    #0a0e1a;
+            --bg-secondary:  #111827;
+            --bg-tertiary:   #1c2434;
+            --card-bg:       rgba(30,41,59,.45);
+            --border-color:  rgba(100,120,160,.18);
+            --primary:       #4f81c9;
+            --secondary:     #6c7dd4;
+            --accent:        #8b72d6;
+            --success:       #34c38f;
+            --warning:       #f0ad4e;
+            --danger:        #e74c5a;
+            --text-primary:  #eef0f4;
+            --text-secondary:#7c8da5;
+            --glow:          rgba(79,129,201,.25);
+            --shadow:        rgba(79,129,201,.12);
+            --glass:         rgba(17,24,39,.7);
         }
 
-        /* Thème Modern Light */
-        [data-theme="modern-light"] {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --bg-tertiary: #f1f5f9;
-            --card-bg: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(99, 102, 241, 0.05));
-            --border-color: rgba(148, 163, 184, 0.15);
-            --primary-color: #3b82f6;
-            --secondary-color: #6366f1;
-            --accent-color: #8b5cf6;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --text-primary: #0f172a;
-            --text-secondary: #64748b;
-            --shadow-color: rgba(59, 130, 246, 0.1);
-            --glow-color: rgba(59, 130, 246, 0.3);
+        /* ── Slate Office ── */
+        [data-theme="slate"] {
+            --bg-primary:    #f0f2f5;
+            --bg-secondary:  #ffffff;
+            --bg-tertiary:   #e8eaee;
+            --card-bg:       rgba(255,255,255,.85);
+            --border-color:  rgba(0,0,0,.08);
+            --primary:       #2c5282;
+            --secondary:     #3182ce;
+            --accent:        #4299e1;
+            --success:       #2f855a;
+            --warning:       #d69e2e;
+            --danger:        #e53e3e;
+            --text-primary:  #1a202c;
+            --text-secondary:#718096;
+            --glow:          rgba(44,82,130,.18);
+            --shadow:        rgba(44,82,130,.1);
+            --glass:         rgba(255,255,255,.88);
         }
 
-        /* Thème Executive Dark */
-        [data-theme="executive"] {
-            --bg-primary: #09090b;
-            --bg-secondary: #18181b;
-            --bg-tertiary: #27272a;
-            --card-bg: linear-gradient(135deg, rgba(212, 175, 55, 0.06), rgba(255, 215, 0, 0.06));
-            --border-color: rgba(212, 175, 55, 0.2);
-            --primary-color: #d4af37;
-            --secondary-color: #ffd700;
-            --accent-color: #b8860b;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --text-primary: #fafafa;
-            --text-secondary: #a1a1aa;
-            --shadow-color: rgba(212, 175, 55, 0.15);
-            --glow-color: rgba(212, 175, 55, 0.4);
+        /* ── Midnight Ink ── */
+        [data-theme="midnight"] {
+            --bg-primary:    #060b16;
+            --bg-secondary:  #0d1520;
+            --bg-tertiary:   #162231;
+            --card-bg:       rgba(13,21,32,.7);
+            --border-color:  rgba(60,130,200,.15);
+            --primary:       #38bdf8;
+            --secondary:     #0ea5e9;
+            --accent:        #7dd3fc;
+            --success:       #22d3ee;
+            --warning:       #fbbf24;
+            --danger:        #f87171;
+            --text-primary:  #e0f2fe;
+            --text-secondary:#4d9cb5;
+            --glow:          rgba(56,189,248,.22);
+            --shadow:        rgba(56,189,248,.1);
+            --glass:         rgba(13,21,32,.8);
         }
 
-        /* Thème Ocean Blue */
-        [data-theme="ocean"] {
-            --bg-primary: #022c43;
-            --bg-secondary: #053f5e;
-            --bg-tertiary: #115e7a;
-            --card-bg: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(14, 165, 233, 0.1));
-            --border-color: rgba(6, 182, 212, 0.25);
-            --primary-color: #06b6d4;
-            --secondary-color: #0ea5e9;
-            --accent-color: #22d3ee;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --text-primary: #ecfeff;
-            --text-secondary: #a5f3fc;
-            --shadow-color: rgba(6, 182, 212, 0.2);
-            --glow-color: rgba(6, 182, 212, 0.5);
+        /* ── Charcoal Gold ── */
+        [data-theme="gold"] {
+            --bg-primary:    #111110;
+            --bg-secondary:  #1a1a18;
+            --bg-tertiary:   #252521;
+            --card-bg:       rgba(26,26,24,.75);
+            --border-color:  rgba(195,163,92,.2);
+            --primary:       #c3a35c;
+            --secondary:     #d4af37;
+            --accent:        #e8c96d;
+            --success:       #52c41a;
+            --warning:       #faad14;
+            --danger:        #ff4d4f;
+            --text-primary:  #f5f0e0;
+            --text-secondary:#8a8268;
+            --glow:          rgba(195,163,92,.22);
+            --shadow:        rgba(195,163,92,.1);
+            --glass:         rgba(26,26,24,.82);
         }
 
-        /* Thème Forest Green */
-        [data-theme="forest"] {
-            --bg-primary: #052e16;
-            --bg-secondary: #14532d;
-            --bg-tertiary: #166534;
-            --card-bg: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1));
-            --border-color: rgba(34, 197, 94, 0.25);
-            --primary-color: #22c55e;
-            --secondary-color: #10b981;
-            --accent-color: #34d399;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --text-primary: #f0fdf4;
-            --text-secondary: #bbf7d0;
-            --shadow-color: rgba(34, 197, 94, 0.2);
-            --glow-color: rgba(34, 197, 94, 0.5);
+        /* ── Deep Teal ── */
+        [data-theme="teal"] {
+            --bg-primary:    #031a1a;
+            --bg-secondary:  #062626;
+            --bg-tertiary:   #0d3535;
+            --card-bg:       rgba(6,38,38,.7);
+            --border-color:  rgba(20,184,166,.18);
+            --primary:       #14b8a6;
+            --secondary:     #0d9488;
+            --accent:        #2dd4bf;
+            --success:       #34d399;
+            --warning:       #f59e0b;
+            --danger:        #f43f5e;
+            --text-primary:  #ccfbf1;
+            --text-secondary:#5eafa0;
+            --glow:          rgba(20,184,166,.22);
+            --shadow:        rgba(20,184,166,.1);
+            --glass:         rgba(6,38,38,.82);
         }
 
-        /* Thème Purple Premium */
-        [data-theme="purple"] {
-            --bg-primary: #1e1b4b;
-            --bg-secondary: #312e81;
-            --bg-tertiary: #4c1d95;
-            --card-bg: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(139, 92, 246, 0.1));
-            --border-color: rgba(168, 85, 247, 0.25);
-            --primary-color: #a855f7;
-            --secondary-color: #8b5cf6;
-            --accent-color: #c084fc;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --text-primary: #faf5ff;
-            --text-secondary: #e9d5ff;
-            --shadow-color: rgba(168, 85, 247, 0.2);
-            --glow-color: rgba(168, 85, 247, 0.5);
+        /* ── Wine & Stone ── */
+        [data-theme="wine"] {
+            --bg-primary:    #1a1012;
+            --bg-secondary:  #241518;
+            --bg-tertiary:   #301c20;
+            --card-bg:       rgba(36,21,24,.7);
+            --border-color:  rgba(180,63,90,.2);
+            --primary:       #b43f5a;
+            --secondary:     #9f3454;
+            --accent:        #d4778f;
+            --success:       #4ade80;
+            --warning:       #fbbf24;
+            --danger:        #f43f5e;
+            --text-primary:  #f9e0e4;
+            --text-secondary:#8a6068;
+            --glow:          rgba(180,63,90,.22);
+            --shadow:        rgba(180,63,90,.1);
+            --glass:         rgba(36,21,24,.82);
         }
 
-        /* Thème Minimalist */
-        [data-theme="minimal"] {
-            --bg-primary: #fafafa;
-            --bg-secondary: #f5f5f5;
-            --bg-tertiary: #e5e5e5;
-            --card-bg: linear-gradient(135deg, rgba(23, 23, 23, 0.02), rgba(64, 64, 64, 0.02));
-            --border-color: rgba(23, 23, 23, 0.08);
-            --primary-color: #171717;
-            --secondary-color: #404040;
-            --accent-color: #737373;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --text-primary: #171717;
-            --text-secondary: #737373;
-            --shadow-color: rgba(23, 23, 23, 0.08);
-            --glow-color: rgba(23, 23, 23, 0.2);
+        /* ── Arctic ── */
+        [data-theme="arctic"] {
+            --bg-primary:    #f1f5f9;
+            --bg-secondary:  #ffffff;
+            --bg-tertiary:   #e2e8f0;
+            --card-bg:       rgba(255,255,255,.9);
+            --border-color:  rgba(0,0,0,.07);
+            --primary:       #0369a1;
+            --secondary:     #0284c7;
+            --accent:        #38bdf8;
+            --success:       #059669;
+            --warning:       #d97706;
+            --danger:        #dc2626;
+            --text-primary:  #0c1829;
+            --text-secondary:#64748b;
+            --glow:          rgba(3,105,161,.14);
+            --shadow:        rgba(3,105,161,.08);
+            --glass:         rgba(255,255,255,.9);
         }
 
+        /* ============================================================
+           TYPOGRAPHY & BODY
+           ============================================================ */
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: background .4s ease, color .4s ease;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Animated background */
+        /* subtle ambient gradient */
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse at 20% 30%, var(--primary-color), transparent 50%),
-                radial-gradient(ellipse at 80% 70%, var(--secondary-color), transparent 50%),
-                radial-gradient(ellipse at 50% 50%, var(--accent-color), transparent 60%);
-            opacity: 0.08;
-            animation: gradientShift 25s ease infinite;
-            z-index: 0;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 15% 20%, var(--primary), transparent),
+                radial-gradient(ellipse 50% 45% at 85% 75%, var(--secondary), transparent);
+            opacity: .06;
             pointer-events: none;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { 
-                opacity: 0.08; 
-                transform: scale(1) rotate(0deg);
-            }
-            50% { 
-                opacity: 0.04; 
-                transform: scale(1.15) rotate(3deg);
-            }
+            z-index: 0;
         }
 
         .container {
             position: relative;
             z-index: 1;
-            max-width: 1400px;
+            max-width: 1360px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 24px 20px;
         }
 
-        /* Notifications */
-        .notification-container {
+        /* ============================================================
+           PUSH-NOTIFICATION BANNER  (requests permission)
+           ============================================================ */
+        .push-banner {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
+            bottom: 0; left: 0; right: 0;
+            z-index: 8000;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            backdrop-filter: blur(14px);
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 -4px 24px rgba(0,0,0,.3);
+            transform: translateY(100%);
+            transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+        }
+        .push-banner.visible { transform: translateY(0); }
+        .push-banner__icon { font-size: 1.6rem; flex-shrink: 0; }
+        .push-banner__text { flex: 1; font-size: .88rem; color: var(--text-secondary); line-height: 1.5; }
+        .push-banner__text strong { color: var(--text-primary); }
+        .push-banner__btn {
+            padding: 10px 22px;
+            background: var(--primary);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 700;
+            font-size: .82rem;
+            letter-spacing: .6px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity .2s, transform .15s;
+            flex-shrink: 0;
+        }
+        .push-banner__btn:hover { opacity: .85; transform: scale(1.03); }
+        .push-banner__dismiss {
+            background: none; border: none;
+            color: var(--text-secondary);
+            font-size: 1.3rem; cursor: pointer;
+            transition: color .2s;
+            flex-shrink: 0;
+        }
+        .push-banner__dismiss:hover { color: var(--text-primary); }
+
+        /* ============================================================
+           TOAST NOTIFICATIONS  (in-page)
+           ============================================================ */
+        .toast-wrap {
+            position: fixed;
+            top: 24px; right: 24px;
+            z-index: 9000;
             display: flex;
             flex-direction: column;
             gap: 10px;
-            max-width: 400px;
+            max-width: 380px;
+            width: calc(100% - 48px);
+            pointer-events: none;
         }
-
-        .notification {
-            background: var(--bg-secondary);
-            backdrop-filter: blur(20px);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 16px 20px;
-            box-shadow: 0 10px 40px var(--shadow-color);
+        .toast {
+            pointer-events: auto;
             display: flex;
-            align-items: center;
-            gap: 15px;
-            animation: slideInRight 0.3s ease;
+            align-items: flex-start;
+            gap: 14px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 18px;
+            box-shadow: 0 8px 32px var(--shadow);
+            animation: toastIn .35s cubic-bezier(.34,1.56,.64,1) forwards;
             position: relative;
             overflow: hidden;
         }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(100%);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .notification::before {
+        .toast::before {
             content: '';
             position: absolute;
-            left: 0;
-            top: 0;
-            width: 4px;
-            height: 100%;
+            left: 0; top: 0;
+            width: 3px; height: 100%;
         }
+        .toast.success::before { background: var(--success); }
+        .toast.error::before   { background: var(--danger); }
+        .toast.warning::before { background: var(--warning); }
+        .toast.info::before    { background: var(--primary); }
 
-        .notification.success::before {
-            background: var(--success-color);
-        }
-
-        .notification.error::before {
-            background: var(--danger-color);
-        }
-
-        .notification.info::before {
-            background: var(--primary-color);
-        }
-
-        .notification.warning::before {
-            background: var(--warning-color);
-        }
-
-        .notification-icon {
-            font-size: 1.5rem;
+        .toast__icon {
+            font-size: 1.15rem;
             flex-shrink: 0;
-        }
-
-        .notification-content {
-            flex: 1;
-        }
-
-        .notification-title {
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: var(--text-primary);
-        }
-
-        .notification-message {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .notification-close {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 1.2rem;
-            padding: 4px;
-            transition: all 0.2s;
-            flex-shrink: 0;
-        }
-
-        .notification-close:hover {
-            color: var(--text-primary);
-        }
-
-        /* Theme Switcher */
-        .theme-switcher {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            background: var(--bg-secondary);
-            backdrop-filter: blur(20px);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px;
-            box-shadow: 0 10px 40px var(--shadow-color);
-            transition: all 0.3s;
-        }
-
-        .theme-switcher:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 50px var(--glow-color);
-        }
-
-        .theme-btn {
-            background: none;
-            border: none;
-            font-size: 1.3rem;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 8px;
-            transition: all 0.3s;
-            color: var(--text-primary);
-        }
-
-        .theme-btn:hover {
-            background: var(--card-bg);
-            transform: scale(1.1);
-        }
-
-        .theme-dropdown {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            margin-top: 10px;
-            background: var(--bg-secondary);
-            backdrop-filter: blur(20px);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 8px;
-            min-width: 240px;
-            box-shadow: 0 10px 40px var(--shadow-color);
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .theme-dropdown.active {
-            display: block;
-        }
-
-        .theme-option {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            margin: 4px 0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 2px solid transparent;
-        }
-
-        .theme-option:hover {
-            background: var(--card-bg);
-            border-color: var(--border-color);
-            transform: translateX(4px);
-        }
-
-        .theme-option.active {
-            background: var(--card-bg);
-            border-color: var(--primary-color);
-        }
-
-        .theme-color-preview {
-            display: flex;
-            gap: 3px;
-        }
-
-        .theme-color-dot {
-            width: 14px;
-            height: 14px;
+            width: 28px; height: 28px;
             border-radius: 50%;
-            border: 1.5px solid var(--border-color);
+            display: flex; align-items: center; justify-content: center;
         }
+        .toast.success .toast__icon { background: rgba(52,195,143,.15); color: var(--success); }
+        .toast.error   .toast__icon { background: rgba(231,76,90,.15);  color: var(--danger); }
+        .toast.warning .toast__icon { background: rgba(240,173,78,.15); color: var(--warning); }
+        .toast.info    .toast__icon { background: rgba(79,129,201,.15); color: var(--primary); }
 
-        .theme-name {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        /* Header */
-        header {
-            text-align: center;
-            padding: 60px 20px 40px;
-            margin-bottom: 50px;
-        }
-
-        h1 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 4rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -2px;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 30px var(--glow-color));
-        }
-
-        .subtitle {
-            font-size: 1rem;
+        .toast__body { flex: 1; min-width: 0; }
+        .toast__title { font-weight: 700; font-size: .88rem; color: var(--text-primary); margin-bottom: 3px; }
+        .toast__msg   { font-size: .8rem; color: var(--text-secondary); line-height: 1.45; }
+        .toast__close {
+            background: none; border: none;
             color: var(--text-secondary);
-            font-weight: 500;
-            letter-spacing: 3px;
-            text-transform: uppercase;
+            font-size: 1.1rem; cursor: pointer;
+            line-height: 1;
+            transition: color .2s;
+            flex-shrink: 0;
+        }
+        .toast__close:hover { color: var(--text-primary); }
+        .toast.out { animation: toastOut .25s ease forwards; }
+
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateX(110%); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes toastOut {
+            from { opacity: 1; transform: translateX(0); max-height: 200px; margin-bottom: 10px; }
+            to   { opacity: 0; transform: translateX(110%); max-height: 0; margin-bottom: 0; padding: 0; }
         }
 
-        /* Action Buttons */
-        .action-buttons {
+        /* ============================================================
+           THEME SWITCHER
+           ============================================================ */
+        .theme-rail {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 24px; left: 24px;
             z-index: 1000;
-            display: flex;
-            gap: 12px;
         }
-
-        .action-btn {
-            padding: 12px 24px;
+        .theme-toggle {
+            width: 44px; height: 44px;
+            border-radius: 12px;
             background: var(--bg-secondary);
-            border: 2px solid var(--border-color);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(14px);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 16px var(--shadow);
+            transition: transform .2s, box-shadow .2s;
+        }
+        .theme-toggle:hover { transform: scale(1.06); box-shadow: 0 6px 22px var(--glow); }
+        .theme-toggle svg { width: 20px; height: 20px; stroke: var(--text-primary); fill: none; stroke-width: 1.8; }
+
+        .theme-panel {
+            position: absolute;
+            top: 52px; left: 0;
+            width: 220px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 10px;
+            box-shadow: 0 12px 40px rgba(0,0,0,.3);
+            backdrop-filter: blur(18px);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-6px);
+            transition: opacity .22s, transform .22s;
+        }
+        .theme-panel.open {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        .theme-panel__label {
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            padding: 6px 10px 2px;
+        }
+        .theme-row {
+            display: flex; align-items: center; gap: 10px;
+            padding: 9px 10px;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: background .18s;
+            border: 1.5px solid transparent;
+        }
+        .theme-row:hover { background: var(--card-bg); }
+        .theme-row.active { border-color: var(--primary); background: var(--card-bg); }
+        .theme-row__swatch {
+            width: 28px; height: 28px;
+            border-radius: 7px;
+            border: 1.5px solid var(--border-color);
+            flex-shrink: 0;
+        }
+        .theme-row__name { font-size: .82rem; font-weight: 600; color: var(--text-primary); }
+
+        /* ============================================================
+           TOP BAR  (action buttons)
+           ============================================================ */
+        .topbar {
+            position: fixed;
+            top: 24px; right: 24px;
+            z-index: 1000;
+            display: flex; gap: 10px;
+        }
+        .topbar__btn {
+            padding: 10px 20px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
             border-radius: 10px;
             color: var(--text-primary);
             font-weight: 600;
+            font-size: .82rem;
+            letter-spacing: .5px;
             cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 4px 15px var(--shadow-color);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 4px 14px var(--shadow);
+            transition: all .22s;
+        }
+        .topbar__btn:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px var(--glow);
         }
 
-        .action-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px var(--glow-color);
-            border-color: var(--primary-color);
-            background: var(--primary-color);
-            color: white;
+        /* ============================================================
+           HEADER
+           ============================================================ */
+        header {
+            text-align: center;
+            padding: 72px 20px 44px;
+            margin-bottom: 36px;
+        }
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1.5px;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: .82rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
         }
 
-        /* Vehicle Grid */
+        /* ============================================================
+           VEHICLE GRID
+           ============================================================ */
         .vehicles-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 25px;
-            margin-bottom: 60px;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 20px;
+            margin-bottom: 56px;
         }
-
         .vehicle-card {
-            background: var(--bg-secondary);
-            backdrop-filter: blur(30px);
-            border-radius: 16px;
-            padding: 28px;
-            border: 2px solid var(--border-color);
+            background: var(--card-bg);
+            backdrop-filter: blur(18px);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 24px;
+            cursor: pointer;
+            transition: transform .25s, border-color .25s, box-shadow .25s;
+            box-shadow: 0 4px 20px var(--shadow);
             position: relative;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            box-shadow: 0 8px 30px var(--shadow-color);
         }
-
+        .vehicle-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            opacity: 0;
+            transition: opacity .25s;
+        }
         .vehicle-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary-color);
-            box-shadow: 0 20px 50px var(--glow-color);
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 12px 36px var(--glow);
         }
+        .vehicle-card:hover::before { opacity: 1; }
 
         .vehicle-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
-
         .vehicle-name {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.6rem;
+            font-size: 1.35rem;
             font-weight: 700;
-            color: var(--primary-color);
-            letter-spacing: -0.5px;
+            color: var(--text-primary);
         }
-
         .vehicle-badge {
-            padding: 8px 16px;
+            padding: 5px 13px;
+            border-radius: 20px;
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .8px;
+            text-transform: uppercase;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
             color: var(--text-secondary);
         }
-
         .vehicle-info {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin: 20px 0;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
         }
-
         .info-item {
-            padding: 14px;
-            background: var(--card-bg);
-            border-radius: 10px;
+            background: var(--bg-tertiary);
             border: 1px solid var(--border-color);
-            transition: all 0.2s;
+            border-radius: 9px;
+            padding: 12px 14px;
+            transition: border-color .2s;
         }
-
-        .info-item:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
+        .info-item:hover { border-color: var(--primary); }
         .info-label {
-            font-size: 0.7rem;
+            font-size: .65rem;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 4px;
         }
-
         .info-value {
             font-weight: 700;
+            font-size: .95rem;
             color: var(--text-primary);
-            font-size: 1.1rem;
         }
-
         .reserve-btn {
             width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 13px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             border: none;
-            border-radius: 10px;
-            color: white;
+            border-radius: 9px;
+            color: #fff;
             font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
+            font-size: .8rem;
             letter-spacing: 1px;
-            box-shadow: 0 4px 15px var(--shadow-color);
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform .2s, box-shadow .2s;
+            box-shadow: 0 3px 12px var(--shadow);
         }
-
         .reserve-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px var(--glow-color);
+            box-shadow: 0 6px 20px var(--glow);
         }
 
-        .delete-vehicle-btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, var(--danger-color), #dc2626);
-            border: none;
-            border-radius: 10px;
-            color: white;
+        /* ============================================================
+           SECTION TITLE
+           ============================================================ */
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--text-primary);
+            margin: 56px 0 32px;
+            position: relative;
+            padding-bottom: 16px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 48px; height: 3px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        /* ============================================================
+           RESERVATION CARDS
+           ============================================================ */
+        .reservation-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(18px);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 18px;
+            transition: transform .25s, border-color .25s, box-shadow .25s;
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+        .reservation-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 32px var(--glow);
+        }
+        .reservation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .reservation-vehicle-info { display: flex; align-items: center; gap: 14px; }
+        .vehicle-icon { font-size: 2rem; }
+        .vehicle-details h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+        .vehicle-plate {
+            font-family: 'Courier New', monospace;
+            font-size: .78rem;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+        }
+        .reservation-status {
+            padding: 6px 16px;
+            border-radius: 18px;
+            font-size: .7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            background: rgba(79,129,201,.12);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        .reservation-body {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .reservation-info-block h4 {
+            color: var(--text-secondary);
+            font-size: .68rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        .reservation-info-block p {
+            font-size: .92rem;
             font-weight: 600;
-            font-size: 0.85rem;
+            color: var(--text-primary);
+        }
+        .time-range { display: flex; align-items: center; gap: 8px; font-size: .92rem; font-weight: 600; }
+        .time-arrow { color: var(--primary); }
+        .reservation-destination { grid-column: 1 / -1; }
+
+        .reservation-actions {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+        .unlock-btn {
+            padding: 11px 22px;
+            background: rgba(231,76,90,.08);
+            border: 1.5px solid var(--danger);
+            border-radius: 9px;
+            color: var(--danger);
+            font-weight: 700;
+            font-size: .78rem;
+            letter-spacing: .8px;
+            text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
+            transition: all .22s;
+        }
+        .unlock-btn:hover {
+            background: var(--danger);
+            color: #fff;
+            box-shadow: 0 6px 18px rgba(231,76,90,.3);
+            transform: translateY(-1px);
         }
 
-        .delete-vehicle-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+        /* ============================================================
+           EMPTY STATE
+           ============================================================ */
+        .empty-state {
+            text-align: center;
+            padding: 56px 20px;
+            color: var(--text-secondary);
+            font-size: .9rem;
         }
+        .empty-state-icon { font-size: 2.8rem; margin-bottom: 12px; opacity: .45; }
 
-        /* Modal */
+        /* ============================================================
+           MODALS
+           ============================================================ */
         .modal {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,.6);
+            backdrop-filter: blur(6px);
             z-index: 2000;
             align-items: center;
             justify-content: center;
             padding: 20px;
         }
-
         .modal.active {
             display: flex;
-            animation: fadeIn 0.2s ease;
+            animation: mIn .2s ease;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes mIn { from { opacity: 0; } to { opacity: 1; } }
 
         .modal-content {
             background: var(--bg-secondary);
-            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 35px;
+            padding: 32px;
             max-width: 600px;
             width: 100%;
-            border: 2px solid var(--border-color);
-            max-height: 90vh;
+            max-height: 88vh;
             overflow-y: auto;
-            animation: slideUp 0.3s ease;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: mUp .28s cubic-bezier(.34,1.56,.64,1);
+            box-shadow: 0 24px 60px rgba(0,0,0,.45);
         }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes mUp {
+            from { opacity: 0; transform: translateY(28px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
-
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 24px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--border-color);
         }
-
         .modal-title {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 1.8rem;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.2s;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-        }
-
-        .close-btn:hover {
-            color: var(--danger-color);
-            background: var(--card-bg);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .form-input, .form-select {
-            width: 100%;
-            padding: 14px;
-            background: var(--bg-tertiary);
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            transition: all 0.2s;
-        }
-
-        .form-input:focus, .form-select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-        }
-
-        .form-select {
-            cursor: pointer;
-        }
-
-        .form-select option {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px var(--glow-color);
-        }
-
-        /* Section Title */
-        .section-title {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2.2rem;
-            text-align: center;
-            margin: 70px 0 40px;
-            color: var(--text-primary);
-            font-weight: 700;
-            letter-spacing: -1px;
-            position: relative;
-            padding-bottom: 20px;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            border-radius: 2px;
-        }
-
-        /* Reservation Card */
-        .reservation-card {
-            background: var(--bg-secondary);
-            backdrop-filter: blur(30px);
-            border-radius: 16px;
-            padding: 28px;
-            border: 2px solid var(--border-color);
-            margin-bottom: 25px;
-            transition: all 0.3s;
-            box-shadow: 0 8px 30px var(--shadow-color);
-        }
-
-        .reservation-card:hover {
-            border-color: var(--primary-color);
-            box-shadow: 0 12px 40px var(--glow-color);
-            transform: translateY(-4px);
-        }
-
-        .reservation-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .reservation-vehicle-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .vehicle-icon {
-            font-size: 2.5rem;
-        }
-
-        .vehicle-details h3 {
-            font-family: 'Poppins', sans-serif;
-            color: var(--primary-color);
-            margin-bottom: 6px;
             font-size: 1.4rem;
             font-weight: 700;
+            color: var(--primary);
         }
-
-        .vehicle-plate {
+        .close-btn {
+            background: none; border: none;
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            font-family: 'Courier New', monospace;
-        }
-
-        .reservation-status {
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .status-active {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(99, 102, 241, 0.2));
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        .reservation-body {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-            margin: 20px 0;
-        }
-
-        .reservation-info-block h4 {
-            color: var(--text-secondary);
-            font-size: 0.75rem;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .reservation-info-block p {
-            color: var(--text-primary);
-            font-size: 1.05rem;
-            font-weight: 600;
-        }
-
-        .time-range {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.05rem;
-            font-weight: 600;
-        }
-
-        .time-arrow {
-            color: var(--primary-color);
-            font-size: 1.2rem;
-        }
-
-        .reservation-destination {
-            grid-column: 1 / -1;
-        }
-
-        .reservation-actions {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 2px solid var(--border-color);
-        }
-
-        .unlock-btn {
-            padding: 14px 28px;
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.15));
-            border: 2px solid var(--danger-color);
-            border-radius: 10px;
-            color: var(--danger-color);
-            font-weight: 700;
+            font-size: 1.5rem;
             cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
+            width: 30px; height: 30px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 7px;
+            transition: all .18s;
+        }
+        .close-btn:hover { color: var(--danger); background: var(--card-bg); }
+
+        /* ── Form Controls ── */
+        .form-group { margin-bottom: 18px; }
+        .form-label { display: block; margin-bottom: 7px; font-weight: 600; font-size: .82rem; color: var(--text-primary); }
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px 14px;
+            background: var(--bg-tertiary);
+            border: 1.5px solid var(--border-color);
+            border-radius: 9px;
+            color: var(--text-primary);
+            font-size: .88rem;
+            transition: border-color .2s, box-shadow .2s;
+        }
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79,129,201,.12);
+        }
+        .form-select { cursor: pointer; }
+        .form-select option { background: var(--bg-secondary); color: var(--text-primary); }
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 9px;
+            color: #fff;
+            font-weight: 700;
+            font-size: .84rem;
             letter-spacing: 1px;
-            font-size: 0.85rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform .2s, box-shadow .2s;
         }
-
-        .unlock-btn:hover {
-            background: var(--danger-color);
-            color: white;
+        .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 6px 20px var(--glow);
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-secondary);
-        }
-
-        .empty-state-icon {
-            font-size: 3.5rem;
-            margin-bottom: 16px;
-            opacity: 0.4;
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 40px;
-            color: var(--primary-color);
-        }
-
-        .loading.active {
-            display: block;
-        }
-
-        /* Time Slots */
+        /* ── Time Slots ── */
         .time-slots-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
-            gap: 8px;
-            margin-top: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(68px, 1fr));
+            gap: 7px;
+            margin-top: 10px;
         }
-
         .time-slot {
-            padding: 12px;
+            padding: 10px 4px;
             background: var(--bg-tertiary);
-            border: 2px solid var(--border-color);
+            border: 1.5px solid var(--border-color);
             border-radius: 8px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: .78rem;
+            color: var(--text-primary);
+            transition: all .18s;
         }
-
         .time-slot:hover:not(.occupied):not(.disabled) {
+            border-color: var(--primary);
             background: var(--card-bg);
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
+        .time-slot.selected { background: var(--primary); border-color: var(--primary); color: #fff; }
+        .time-slot.occupied { background: rgba(231,76,90,.08); border-color: rgba(231,76,90,.25); opacity: .5; cursor: not-allowed; }
+        .time-slot.disabled { opacity: .28; cursor: not-allowed; }
 
-        .time-slot.selected {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-            color: white;
-        }
-
-        .time-slot.occupied {
-            background: rgba(239, 68, 68, 0.1);
-            border-color: rgba(239, 68, 68, 0.3);
-            cursor: not-allowed;
-            opacity: 0.5;
-        }
-
-        .time-slot.disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-
-        /* Admin Panel */
-        .admin-vehicles-list {
-            display: grid;
-            gap: 20px;
-            margin-top: 25px;
-        }
-
-        /* History Panel */
-        .filters-section {
-            background: var(--bg-secondary);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 25px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-            align-items: end;
-        }
-
-        .export-btn {
-            padding: 14px 24px;
-            background: linear-gradient(135deg, var(--success-color), #059669);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.85rem;
-            white-space: nowrap;
-        }
-
-        .export-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: var(--bg-secondary);
-            border: 2px solid var(--border-color);
+        /* ============================================================
+           ADMIN PANEL EXTRAS
+           ============================================================ */
+        .admin-section-bg {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 24px;
+            margin-bottom: 28px;
+        }
+        .admin-section-title {
+            color: var(--primary);
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+        .admin-vehicles-list { display: grid; gap: 16px; }
+        .delete-vehicle-btn {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(135deg, var(--danger), #c0392b);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 600;
+            font-size: .78rem;
+            cursor: pointer;
+            transition: transform .2s, box-shadow .2s;
+            margin-top: 10px;
+        }
+        .delete-vehicle-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 16px rgba(231,76,90,.35);
+        }
+
+        /* ============================================================
+           HISTORY MODAL
+           ============================================================ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 11px;
+            padding: 20px 14px;
             text-align: center;
-            transition: all 0.3s;
+            transition: border-color .2s, transform .2s;
         }
+        .stat-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+        .stat-value { font-size: 1.8rem; font-weight: 900; color: var(--primary); margin-bottom: 4px; }
+        .stat-label { font-size: .68rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
 
-        .stat-card:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px var(--shadow-color);
+        .filters-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 11px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 14px;
+            align-items: end;
         }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--primary-color);
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
+        .export-btn {
+            padding: 11px 20px;
+            background: linear-gradient(135deg, var(--success), #2ecc71);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 700;
+            font-size: .76rem;
+            letter-spacing: .8px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            cursor: pointer;
+            transition: transform .2s, box-shadow .2s;
+            white-space: nowrap;
         }
+        .export-btn:hover { transform: translateY(-1px); box-shadow: 0 5px 16px rgba(52,195,143,.3); }
 
         .history-table-container {
             background: var(--bg-secondary);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 11px;
+            padding: 0;
             overflow-x: auto;
         }
-
-        .history-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
+        .history-table { width: 100%; border-collapse: collapse; }
         .history-table th {
             background: var(--bg-tertiary);
-            color: var(--text-primary);
-            padding: 14px;
+            color: var(--text-secondary);
+            padding: 12px 14px;
             text-align: left;
             font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.8rem;
+            font-size: .68rem;
             letter-spacing: 1px;
-            border-bottom: 2px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 10;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky; top: 0; z-index: 2;
         }
-
         .history-table td {
-            padding: 14px;
+            padding: 12px 14px;
             border-bottom: 1px solid var(--border-color);
             color: var(--text-primary);
+            font-size: .82rem;
         }
-
-        .history-table tr {
-            transition: all 0.2s;
-        }
-
-        .history-table tbody tr:hover {
-            background: var(--card-bg);
-        }
-
+        .history-table tbody tr { transition: background .18s; }
+        .history-table tbody tr:hover { background: var(--card-bg); }
         .status-badge {
             display: inline-block;
-            padding: 6px 14px;
-            border-radius: 16px;
-            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 14px;
+            font-size: .68rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: .5px;
         }
+        .status-completed { background: rgba(52,195,143,.15); border: 1px solid var(--success); color: var(--success); }
+        .status-active    { background: rgba(79,129,201,.15); border: 1px solid var(--primary); color: var(--primary); }
 
-        .status-completed {
-            background: rgba(16, 185, 129, 0.2);
-            border: 1.5px solid var(--success-color);
-            color: var(--success-color);
-        }
-
-        .status-active {
-            background: rgba(59, 130, 246, 0.2);
-            border: 1.5px solid var(--primary-color);
-            color: var(--primary-color);
-        }
-
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            .vehicles-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .modal-content {
-                padding: 25px;
-            }
-
-            .action-buttons {
-                top: auto;
-                bottom: 20px;
-                right: 20px;
-                flex-direction: column;
-            }
-
-            .theme-switcher {
-                top: 80px;
-            }
-
-            .notification-container {
-                left: 20px;
-                right: 20px;
-                max-width: none;
-            }
+            .topbar { top: auto; bottom: 80px; right: 16px; flex-direction: column; }
+            .theme-rail { top: 16px; left: 16px; }
+            .toast-wrap { top: 16px; right: 16px; left: 16px; max-width: none; width: auto; }
+            .vehicles-grid { grid-template-columns: 1fr; }
+            .modal-content { padding: 22px; }
+            header { padding: 56px 16px 32px; }
         }
     </style>
 </head>
 <body>
-    <!-- Notifications Container -->
-    <div class="notification-container" id="notificationContainer"></div>
+<!-- ============================================================
+     PUSH NOTIFICATION PERMISSION BANNER
+     ============================================================ -->
+<div class="push-banner" id="pushBanner">
+    <div class="push-banner__icon">🔔</div>
+    <div class="push-banner__text">
+        <strong>Activer les notifications ?</strong><br>
+        Recevez une alerte en temps réel chaque fois qu'une réservation est créée ou terminée — même si cette page est fermée.
+    </div>
+    <button class="push-banner__btn" id="pushAcceptBtn">Activer</button>
+    <button class="push-banner__dismiss" id="pushDismissBtn">✕</button>
+</div>
 
-    <!-- Theme Switcher -->
-    <div class="theme-switcher">
-        <button class="theme-btn" onclick="toggleThemeDropdown()">🎨</button>
-        <div class="theme-dropdown" id="themeDropdown">
-            <div class="theme-option active" data-theme="corporate" onclick="changeTheme('corporate')">
-                <div class="theme-color-preview">
-                    <div class="theme-color-dot" style="background: #3b82f6;"></div>
-                    <div class="theme-color-dot" style="background: #6366f1;"></div>
-                    <div class="theme-color-dot" style="background: #8b5cf6;"></div>
-                </div>
-                <span class="theme-name">Corporate Pro</span>
-            </div>
-            <div class="theme-option" data-theme="modern-light" onclick="changeTheme('modern-light')">
-                <div class="theme-color-preview">
-                    <div class="theme-color-dot" style="background: #3b82f6;"></div>
-                    <div class="theme-color-dot" style="background: #6366f1;"></div>
-                    <div class="theme-color-dot" style="background: #8b5cf6;"></div>
-                </div>
-                <span class="theme-name">Modern Light</span>
-            </div>
-            <div class="theme-option" data-theme="executive" onclick="changeTheme('executive')">
-                <div class="theme-color-preview">
-                    <div class="theme-color-dot" style="background: #d4af37;"></div>
-                    <div class="theme-color-dot" style="background: #ffd700;"></div>
-                    <div class="theme-color-dot" style="background: #b8860b;"></div>
-                </div>
-                <span class="theme-name">Executive</span>
-            </div>
-            <div class="theme-option" data-theme="ocean" onclick="changeTheme('ocean')">
-                <div class="theme-color-preview">
-                    <div class="theme-color-dot" style="background: #06b6d4;"></div>
-                    <div class="theme-color-dot" style="background: #0ea5e9;"></div>
-                    <div class="theme-color-dot" style="background: #22d3ee;"></div>
-                </div>
-                <span class="theme-name">Ocean Blue</span>
-            </div>
-            <div class="theme-option" data-theme="forest" onclick="changeTheme('forest')">
-                <div class="theme-color-preview">
-                    <div class="theme-color-dot" style="background: #22c55e;"></div>
-                    <div class="theme-color-dot" style="background: #10b981;"></div>
-                    <div class="theme-color-dot" style="background: #34d399;"></div>
-                </div>
-                <span class="theme-name">Forest Green</span>
-            </div>
-            <div class="theme-option" data-theme="purple" onclick="changeTheme('purple')">
-                <div class="theme-color-preview">
-                    <div class="theme-color-dot" style="background: #a855f7;"></div>
-                    <div class="theme-color-dot" style="background: #8b5cf6;"></div>
-                    <div class="theme-color-dot" style="background: #c084fc;"></div>
-                </div>
-                <span class="theme-name">Purple Premium</span>
-            </div>
-            <div class="theme-option" data-theme="minimal" onclick="changeTheme('minimal')">
-                <div class="theme-color-preview">
-                    <div class="theme-color-dot" style="background: #171717;"></div>
-                    <div class="theme-color-dot" style="background: #404040;"></div>
-                    <div class="theme-color-dot" style="background: #737373;"></div>
-                </div>
-                <span class="theme-name">Minimalist</span>
-            </div>
+<!-- ============================================================
+     IN-PAGE TOAST CONTAINER
+     ============================================================ -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- ============================================================
+     THEME SWITCHER
+     ============================================================ -->
+<div class="theme-rail">
+    <div class="theme-toggle" id="themeToggle">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"/></svg>
+    </div>
+    <div class="theme-panel" id="themePanel">
+        <div class="theme-panel__label">Apparence</div>
+        <div class="theme-row active" data-theme="corporate">
+            <div class="theme-row__swatch" style="background: linear-gradient(135deg, #0a0e1a 50%, #4f81c9 50%);"></div>
+            <span class="theme-row__name">Corporate Steel</span>
+        </div>
+        <div class="theme-row" data-theme="slate">
+            <div class="theme-row__swatch" style="background: linear-gradient(135deg, #f0f2f5 50%, #2c5282 50%);"></div>
+            <span class="theme-row__name">Slate Office</span>
+        </div>
+        <div class="theme-row" data-theme="midnight">
+            <div class="theme-row__swatch" style="background: linear-gradient(135deg, #060b16 50%, #38bdf8 50%);"></div>
+            <span class="theme-row__name">Midnight Ink</span>
+        </div>
+        <div class="theme-row" data-theme="gold">
+            <div class="theme-row__swatch" style="background: linear-gradient(135deg, #111110 50%, #c3a35c 50%);"></div>
+            <span class="theme-row__name">Charcoal Gold</span>
+        </div>
+        <div class="theme-row" data-theme="teal">
+            <div class="theme-row__swatch" style="background: linear-gradient(135deg, #031a1a 50%, #14b8a6 50%);"></div>
+            <span class="theme-row__name">Deep Teal</span>
+        </div>
+        <div class="theme-row" data-theme="wine">
+            <div class="theme-row__swatch" style="background: linear-gradient(135deg, #1a1012 50%, #b43f5a 50%);"></div>
+            <span class="theme-row__name">Wine & Stone</span>
+        </div>
+        <div class="theme-row" data-theme="arctic">
+            <div class="theme-row__swatch" style="background: linear-gradient(135deg, #f1f5f9 50%, #0369a1 50%);"></div>
+            <span class="theme-row__name">Arctic</span>
         </div>
     </div>
+</div>
 
-    <!-- Action Buttons -->
-    <div class="action-buttons">
-        <button class="action-btn" onclick="openAdminPanel()">Admin</button>
-        <button class="action-btn" onclick="openHistoryPanel()">Historique</button>
-    </div>
+<!-- ============================================================
+     TOP BAR
+     ============================================================ -->
+<div class="topbar">
+    <button class="topbar__btn" id="btnAdmin">Admin</button>
+    <button class="topbar__btn" id="btnHistory">Historique</button>
+</div>
 
-    <div class="container">
-        <header>
-            <h1>GMR Lorraine</h1>
-            <div class="subtitle">Système de Réservation de Véhicules</div>
-        </header>
+<!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+<div class="container">
+    <header>
+        <h1>GMR Lorraine</h1>
+        <div class="subtitle">Système de Réservation de Véhicules</div>
+    </header>
+    <div id="vehiclesGrid" class="vehicles-grid"></div>
 
-        <div id="vehiclesGrid" class="vehicles-grid"></div>
-
-        <h2 class="section-title">Réservations Actives</h2>
-        <div id="reservationsTimeline">
-            <div class="loading active">Chargement des réservations...</div>
+    <h2 class="section-title">Réservations Actives</h2>
+    <div id="reservationsTimeline">
+        <div class="empty-state">
+            <div class="empty-state-icon">⏳</div>
+            <div>Chargement…</div>
         </div>
     </div>
+</div>
 
-    <!-- Modal Admin Login -->
-    <div id="adminLoginModal" class="modal">
-        <div class="modal-content" style="max-width: 420px;">
-            <div class="modal-header" style="flex-direction: column; align-items: center; text-align: center;">
-                <h2 class="modal-title">Accès Admin</h2>
-            </div>
-            
-            <form id="adminLoginForm">
-                <div class="form-group">
-                    <input type="password" id="adminPassword" class="form-input" required 
-                           placeholder="Mot de passe"
-                           style="text-align: center; font-size: 1.05rem;">
-                </div>
-                <button type="submit" class="submit-btn">Se Connecter</button>
-            </form>
+<!-- ============================================================
+     MODAL — Admin Login
+     ============================================================ -->
+<div id="adminLoginModal" class="modal">
+    <div class="modal-content" style="max-width:400px;">
+        <div class="modal-header" style="flex-direction:column;align-items:center;text-align:center;border-bottom:none;padding-bottom:0;">
+            <h2 class="modal-title">Accès Admin</h2>
         </div>
-    </div>
-
-    <!-- Modal Admin Panel -->
-    <div id="adminPanelModal" class="modal">
-        <div class="modal-content" style="max-width: 900px;">
-            <div class="modal-header">
-                <h2 class="modal-title">Gestion des Véhicules</h2>
-                <button class="close-btn" onclick="closeAdminPanel()">×</button>
-            </div>
-            
-            <div style="background: var(--card-bg); border: 2px solid var(--border-color); border-radius: 12px; padding: 28px; margin-bottom: 35px;">
-                <h3 style="color: var(--primary-color); margin-bottom: 20px; font-size: 1.3rem; font-weight: 700;">Ajouter un Véhicule</h3>
-                
-                <form id="addVehicleForm">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
-                        <div class="form-group">
-                            <label class="form-label">Nom du véhicule</label>
-                            <input type="text" id="vehicleName" class="form-input" required placeholder="Ex: Duster">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Plaque</label>
-                            <input type="text" id="vehiclePlate" class="form-input" required placeholder="Ex: FL024LX">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Places</label>
-                            <input type="number" id="vehicleSeats" class="form-input" required min="1" max="9" placeholder="5">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Type</label>
-                            <select id="vehicleType" class="form-select" required>
-                                <option value="">Sélectionner...</option>
-                                <option value="Électrique">Électrique</option>
-                                <option value="Diesel">Diesel</option>
-                                <option value="Essence">Essence</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button type="submit" class="submit-btn" style="margin-top: 20px;">
-                        Ajouter le Véhicule
-                    </button>
-                </form>
-            </div>
-
-            <div>
-                <h3 style="color: var(--primary-color); margin-bottom: 20px; font-size: 1.3rem; font-weight: 700;">Véhicules Actuels</h3>
-                <div id="adminVehiclesList" class="admin-vehicles-list"></div>
-            </div>
+        <div class="form-group">
+            <input type="password" id="adminPassword" class="form-input" placeholder="Mot de passe" style="text-align:center;font-size:1rem;">
         </div>
+        <button class="submit-btn" id="btnAdminLogin">Se Connecter</button>
     </div>
+</div>
 
-    <!-- Modal Réservation -->
-    <div id="reservationModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Réserver un véhicule</h2>
-                <button class="close-btn" onclick="closeModal()">×</button>
-            </div>
-            <form id="reservationForm">
-                <div class="form-group">
-                    <label class="form-label">Nom du salarié</label>
-                    <input type="text" id="employeeName" class="form-input" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Date</label>
-                    <input type="date" id="reservationDate" class="form-input" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Heure de départ</label>
-                    <div id="startTimeSlots" class="time-slots-container"></div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Heure de retour</label>
-                    <div id="endTimeSlots" class="time-slots-container"></div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Destination</label>
-                    <input type="text" id="destination" class="form-input" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Motif (optionnel)</label>
-                    <input type="text" id="motif" class="form-input">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Mot de passe de protection</label>
-                    <input type="password" id="protectionPassword" class="form-input" required 
-                           placeholder="Créez un mot de passe pour cette réservation">
-                </div>
-                <button type="submit" class="submit-btn">Confirmer la réservation</button>
-            </form>
+<!-- ============================================================
+     MODAL — Admin Panel
+     ============================================================ -->
+<div id="adminPanelModal" class="modal">
+    <div class="modal-content" style="max-width:860px;">
+        <div class="modal-header">
+            <h2 class="modal-title">Gestion des Véhicules</h2>
+            <button class="close-btn" id="btnCloseAdmin">×</button>
         </div>
-    </div>
-
-    <!-- Modal Déverrouillage -->
-    <div id="unlockModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Déverrouiller</h2>
-                <button class="close-btn" onclick="closeUnlockModal()">×</button>
-            </div>
-            <form id="unlockForm">
+        <div class="admin-section-bg">
+            <div class="admin-section-title">Ajouter un Véhicule</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;">
+                <div class="form-group"><label class="form-label">Nom</label><input type="text" id="vehicleName" class="form-input" placeholder="Ex: Duster"></div>
+                <div class="form-group"><label class="form-label">Plaque</label><input type="text" id="vehiclePlate" class="form-input" placeholder="Ex: FL024LX"></div>
+                <div class="form-group"><label class="form-label">Places</label><input type="number" id="vehicleSeats" class="form-input" min="1" max="9" placeholder="5"></div>
                 <div class="form-group">
-                    <label class="form-label">Entrez le mot de passe de protection</label>
-                    <input type="password" id="unlockPassword" class="form-input" required>
-                </div>
-                <button type="submit" class="submit-btn">Terminer la réservation</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal Historique -->
-    <div id="historyModal" class="modal">
-        <div class="modal-content" style="max-width: 1200px;">
-            <div class="modal-header">
-                <h2 class="modal-title">Historique des Réservations</h2>
-                <button class="close-btn" onclick="closeHistoryPanel()">×</button>
-            </div>
-
-            <!-- Statistiques -->
-            <div class="stats-grid" id="statsGrid">
-                <div class="stat-card">
-                    <div class="stat-value" id="totalReservations">0</div>
-                    <div class="stat-label">Total Réservations</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="activeReservations">0</div>
-                    <div class="stat-label">En Cours</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="completedReservations">0</div>
-                    <div class="stat-label">Complétées</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="mostUsedVehicle">-</div>
-                    <div class="stat-label">Véhicule le plus utilisé</div>
-                </div>
-            </div>
-
-            <!-- Filtres -->
-            <div class="filters-section">
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label class="form-label">Date début</label>
-                    <input type="date" id="filterStartDate" class="form-input">
-                </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label class="form-label">Date fin</label>
-                    <input type="date" id="filterEndDate" class="form-input">
-                </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label class="form-label">Véhicule</label>
-                    <select id="filterVehicle" class="form-select">
-                        <option value="">Tous les véhicules</option>
+                    <label class="form-label">Type</label>
+                    <select id="vehicleType" class="form-select">
+                        <option value="">Sélectionner…</option>
+                        <option value="Électrique">Électrique</option>
+                        <option value="Diesel">Diesel</option>
+                        <option value="Essence">Essence</option>
                     </select>
                 </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label class="form-label">Salarié</label>
-                    <input type="text" id="filterEmployee" class="form-input" placeholder="Nom du salarié">
-                </div>
-                <button class="export-btn" onclick="exportToExcel()">Exporter Excel</button>
             </div>
+            <button class="submit-btn" id="btnAddVehicle" style="margin-top:16px;">Ajouter le Véhicule</button>
+        </div>
+        <div class="admin-section-title">Véhicules Actuels</div>
+        <div id="adminVehiclesList" class="admin-vehicles-list"></div>
+    </div>
+</div>
 
-            <!-- Tableau -->
-            <div class="history-table-container">
-                <table class="history-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Véhicule</th>
-                            <th>Salarié</th>
-                            <th>Horaires</th>
-                            <th>Destination</th>
-                            <th>Motif</th>
-                            <th>Statut</th>
-                        </tr>
-                    </thead>
-                    <tbody id="historyTableBody">
-                        <tr>
-                            <td colspan="7" style="text-align: center; padding: 40px; color: var(--text-secondary);">
-                                Chargement de l'historique...
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+<!-- ============================================================
+     MODAL — Réservation
+     ============================================================ -->
+<div id="reservationModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Réserver un véhicule</h2>
+            <button class="close-btn" id="btnCloseRes">×</button>
+        </div>
+        <div class="form-group"><label class="form-label">Nom du salarié</label><input type="text" id="employeeName" class="form-input"></div>
+        <div class="form-group"><label class="form-label">Date</label><input type="date" id="reservationDate" class="form-input"></div>
+        <div class="form-group"><label class="form-label">Heure de départ</label><div id="startTimeSlots" class="time-slots-container"></div></div>
+        <div class="form-group"><label class="form-label">Heure de retour</label><div id="endTimeSlots" class="time-slots-container"></div></div>
+        <div class="form-group"><label class="form-label">Destination</label><input type="text" id="destination" class="form-input"></div>
+        <div class="form-group"><label class="form-label">Motif (optionnel)</label><input type="text" id="motif" class="form-input"></div>
+        <div class="form-group"><label class="form-label">Mot de passe de protection</label><input type="password" id="protectionPassword" class="form-input" placeholder="Créez un mot de passe…"></div>
+        <button class="submit-btn" id="btnSubmitRes">Confirmer la réservation</button>
+    </div>
+</div>
+
+<!-- ============================================================
+     MODAL — Déverrouillage
+     ============================================================ -->
+<div id="unlockModal" class="modal">
+    <div class="modal-content" style="max-width:420px;">
+        <div class="modal-header">
+            <h2 class="modal-title">Déverrouiller</h2>
+            <button class="close-btn" id="btnCloseUnlock">×</button>
+        </div>
+        <div class="form-group"><label class="form-label">Mot de passe de protection</label><input type="password" id="unlockPassword" class="form-input"></div>
+        <button class="submit-btn" id="btnSubmitUnlock">Terminer la réservation</button>
+    </div>
+</div>
+
+<!-- ============================================================
+     MODAL — Historique
+     ============================================================ -->
+<div id="historyModal" class="modal">
+    <div class="modal-content" style="max-width:1100px;">
+        <div class="modal-header">
+            <h2 class="modal-title">Historique des Réservations</h2>
+            <button class="close-btn" id="btnCloseHistory">×</button>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-value" id="totalReservations">0</div><div class="stat-label">Total</div></div>
+            <div class="stat-card"><div class="stat-value" id="activeReservations">0</div><div class="stat-label">En Cours</div></div>
+            <div class="stat-card"><div class="stat-value" id="completedReservations">0</div><div class="stat-label">Complétées</div></div>
+            <div class="stat-card"><div class="stat-value" id="mostUsedVehicle">—</div><div class="stat-label">Plus utilisé</div></div>
+        </div>
+        <div class="filters-section">
+            <div class="form-group" style="margin-bottom:0;"><label class="form-label">Date début</label><input type="date" id="filterStartDate" class="form-input"></div>
+            <div class="form-group" style="margin-bottom:0;"><label class="form-label">Date fin</label><input type="date" id="filterEndDate" class="form-input"></div>
+            <div class="form-group" style="margin-bottom:0;"><label class="form-label">Véhicule</label><select id="filterVehicle" class="form-select"><option value="">Tous</option></select></div>
+            <div class="form-group" style="margin-bottom:0;"><label class="form-label">Salarié</label><input type="text" id="filterEmployee" class="form-input" placeholder="Nom…"></div>
+            <button class="export-btn" id="btnExport">Exporter Excel</button>
+        </div>
+        <div class="history-table-container">
+            <table class="history-table">
+                <thead><tr><th>Date</th><th>Véhicule</th><th>Salarié</th><th>Horaires</th><th>Destination</th><th>Motif</th><th>Statut</th></tr></thead>
+                <tbody id="historyTableBody"><tr><td colspan="7" style="text-align:center;padding:36px;color:var(--text-secondary);">Chargement…</td></tr></tbody>
+            </table>
         </div>
     </div>
+</div>
 
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js';
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js';
+<!-- ============================================================
+     APPLICATION SCRIPT
+     ============================================================ -->
+<script type="module">
+import { initializeApp }                                           from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js';
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js';
+import { getMessaging, getToken, onMessage }                      from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-messaging.js';
 
-        // Configuration Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyDDFzYGVZXmJOWy7XIOO4CmBfPvlJsWFCs",
-            authDomain: "rte-reservation-vehicule.firebaseapp.com",
-            projectId: "rte-reservation-vehicule",
-            storageBucket: "rte-reservation-vehicule.firebasestorage.app",
-            messagingSenderId: "56823546993",
-            appId: "1:56823546993:web:b1e54fbbc9fe99f5b907d0"
-        };
+/* ──────────────────────────────────────────────
+   FIREBASE INIT
+   ────────────────────────────────────────────── */
+const firebaseConfig = {
+    apiKey:            "AIzaSyDDFzYGVZXmJOWy7XIOO4CmBfPvlJsWFCs",
+    authDomain:        "rte-reservation-vehicule.firebaseapp.com",
+    projectId:         "rte-reservation-vehicule",
+    storageBucket:     "rte-reservation-vehicule.firebasestorage.app",
+    messagingSenderId: "56823546993",
+    appId:             "1:56823546993:web:b1e54fbbc9fe99f5b907d0"
+};
 
-        // Initialisation Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+const app  = initializeApp(firebaseConfig);
+const db   = getFirestore(app);
+const fcm  = getMessaging(app);
 
-        // Variables globales
-        let vehicles = [];
-        const ADMIN_PASSWORD_HASH = "7c3504aefae880c790748706f3da821868a943e8fc411760f92e4631e9a1064c";
+/* ──────────────────────────────────────────────
+   VAPID KEY  — remplacez par votre clé réelle
+   dans Firebase Console > Cloud Messaging > Web Push certificates
+   ────────────────────────────────────────────── */
+const VAPID_KEY = "YOUR_VAPID_KEY_HERE";
 
-        // Générer les créneaux horaires
-        const timeSlots = [];
-        for (let i = 7; i <= 20; i++) {
-            timeSlots.push(`${i.toString().padStart(2, '0')}:00`);
+/* ──────────────────────────────────────────────
+   PUSH NOTIFICATIONS — permission & token
+   ────────────────────────────────────────────── */
+const pushBanner   = document.getElementById('pushBanner');
+const pushAccept   = document.getElementById('pushAcceptBtn');
+const pushDismiss  = document.getElementById('pushDismissBtn');
+
+async function initPushNotifications() {
+    // Si déjà accordé, enregistrer le token silencieusement
+    if (Notification.permission === 'granted') {
+        await registerFCMToken();
+        return;
+    }
+    // Si pas encore demandé → afficher la bannière
+    if (Notification.permission === 'default') {
+        pushBanner.classList.add('visible');
+    }
+    // Si refusé → on ne montre rien
+}
+
+pushAccept.addEventListener('click', async () => {
+    pushBanner.classList.remove('visible');
+    const perm = await Notification.requestPermission();
+    if (perm === 'granted') {
+        await registerFCMToken();
+        toast('success', 'Notifications activées', 'Vous recevrez les alertes en temps réel.');
+    } else {
+        toast('warning', 'Permission refusée', 'Les notifications restent désactivées.');
+    }
+});
+
+pushDismiss.addEventListener('click', () => {
+    pushBanner.classList.remove('visible');
+});
+
+async function registerFCMToken() {
+    try {
+        const token = await getToken(fcm, { vapidKey: VAPID_KEY });
+        if (token) {
+            // Stocker le token dans Firestore pour l'envoyer depuis un backend
+            await addDoc(collection(db, 'fcm_tokens'), {
+                token:     token,
+                createdAt: new Date().toISOString()
+            });
+            console.log('[FCM] Token enregistré :', token);
         }
+    } catch (err) {
+        console.warn('[FCM] Impossible d\'obtenir le token :', err);
+    }
+}
 
-        let selectedVehicle = null;
-        let selectedStartTime = null;
-        let selectedEndTime = null;
-        let currentReservations = [];
-        let allHistoryLogs = [];
-        let currentUnlockReservation = null;
-        let selectedDate = null;
+// Messages reçus PENDANT que la page est ouverte (foreground)
+onMessage(fcm, (payload) => {
+    console.log('[FCM Foreground]', payload);
+    const title = payload.notification?.title || 'GMR Lorraine';
+    const body  = payload.notification?.body  || '';
 
-        // ============= SYSTÈME DE NOTIFICATIONS =============
-        function showNotification(type, title, message) {
-            // Vérifier que le DOM est chargé
-            let container = document.getElementById('notificationContainer');
-            if (!container) {
-                console.warn('Container de notifications pas encore chargé');
-                return;
-            }
-            
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            
-            const icons = {
-                success: '✓',
-                error: '✕',
-                info: 'ℹ',
-                warning: '⚠'
-            };
-            
-            notification.innerHTML = `
-                <div class="notification-icon">${icons[type] || 'ℹ'}</div>
-                <div class="notification-content">
-                    <div class="notification-title">${title}</div>
-                    <div class="notification-message">${message}</div>
+    // Déterminer le type de toast
+    let type = 'info';
+    if (body.toLowerCase().includes('nouvelle réservation')) type = 'success';
+    if (body.toLowerCase().includes('terminée') || body.toLowerCase().includes('libéré')) type = 'warning';
+
+    toast(type, title, body);
+});
+
+/* ──────────────────────────────────────────────
+   TOAST SYSTEM  (in-page)
+   ────────────────────────────────────────────── */
+const toastWrap = document.getElementById('toastWrap');
+const ICONS = { success: '✓', error: '✕', warning: '⚠', info: 'ℹ' };
+
+function toast(type, title, msg) {
+    const el = document.createElement('div');
+    el.className = `toast ${type}`;
+    el.innerHTML = `
+        <div class="toast__icon">${ICONS[type]||'ℹ'}</div>
+        <div class="toast__body">
+            <div class="toast__title">${title}</div>
+            <div class="toast__msg">${msg}</div>
+        </div>
+        <button class="toast__close">×</button>
+    `;
+    el.querySelector('.toast__close').addEventListener('click', () => dismissToast(el));
+    toastWrap.appendChild(el);
+    setTimeout(() => dismissToast(el), 5200);
+}
+
+function dismissToast(el) {
+    if (!el.parentNode) return;
+    el.classList.add('out');
+    el.addEventListener('animationend', () => el.remove(), { once: true });
+}
+
+/* ──────────────────────────────────────────────
+   THEME SYSTEM
+   ────────────────────────────────────────────── */
+const themeToggle = document.getElementById('themeToggle');
+const themePanel  = document.getElementById('themePanel');
+const themeRows   = document.querySelectorAll('.theme-row');
+
+themeToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    themePanel.classList.toggle('open');
+});
+document.addEventListener('click', (e) => {
+    if (!themePanel.contains(e.target) && e.target !== themeToggle)
+        themePanel.classList.remove('open');
+});
+
+function applyTheme(name) {
+    themeRows.forEach(r => r.classList.remove('active'));
+    const row = document.querySelector(`.theme-row[data-theme="${name}"]`);
+    if (row) row.classList.add('active');
+    if (name === 'corporate') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', name);
+    localStorage.setItem('gmr_theme', name);
+    themePanel.classList.remove('open');
+}
+
+themeRows.forEach(row => {
+    row.addEventListener('click', () => applyTheme(row.dataset.theme));
+});
+
+// Restaurer thème sauvegardé
+(function() {
+    const saved = localStorage.getItem('gmr_theme') || 'corporate';
+    applyTheme(saved);
+})();
+
+/* ──────────────────────────────────────────────
+   GLOBALS
+   ────────────────────────────────────────────── */
+let vehicles            = [];
+let currentReservations = [];
+let allHistoryLogs      = [];
+let selectedVehicle     = null;
+let selectedStartTime   = null;
+let selectedEndTime     = null;
+let selectedDate        = null;
+let currentUnlockRes    = null;
+
+const ADMIN_HASH = "7c3504aefae880c790748706f3da821868a943e8fc411760f92e4631e9a1064c";
+const TIME_SLOTS = [];
+for (let h = 7; h <= 20; h++) TIME_SLOTS.push(`${String(h).padStart(2,'0')}:00`);
+
+async function hashPassword(pw) {
+    const buf  = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
+    return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+function formatDate(s) {
+    return new Date(s).toLocaleDateString('fr-FR', { weekday:'long', day:'2-digit', month:'long', year:'numeric' });
+}
+
+/* ──────────────────────────────────────────────
+   SEND PUSH TO ALL STORED TOKENS  (client-side helper)
+   In production, move this to a Cloud Function / backend.
+   Here it reads tokens from Firestore and calls the FCM HTTP v1 API.
+   ────────────────────────────────────────────── */
+async function sendPushToAll(title, body, tag) {
+    try {
+        const snap = await getDocs(collection(db, 'fcm_tokens'));
+        const tokens = [];
+        snap.forEach(d => tokens.push(d.data().token));
+
+        for (const token of tokens) {
+            // NOTE: In production use a backend (Cloud Function) to send FCM messages.
+            // Direct HTTP calls from the browser require the FCM server key, which should never be in client code.
+            // This placeholder logs the intent; wire up your backend endpoint here.
+            console.log('[FCM] Would send to token:', token, { title, body, tag });
+        }
+    } catch (e) {
+        console.warn('[FCM] sendPushToAll error:', e);
+    }
+}
+
+/* ──────────────────────────────────────────────
+   VEHICLES  — load / display
+   ────────────────────────────────────────────── */
+async function loadVehicles() {
+    try {
+        const snap = await getDocs(collection(db, 'vehicles'));
+        vehicles = [];
+        snap.forEach(d => vehicles.push({ id: d.id, ...d.data() }));
+        if (vehicles.length === 0) await initDefaultVehicles();
+        renderVehicles();
+    } catch (e) {
+        console.error(e);
+        toast('error', 'Erreur', 'Impossible de charger les véhicules.');
+    }
+}
+
+async function initDefaultVehicles() {
+    const defaults = [
+        { name:'Duster',  plate:'FL024LX', seats:2, type:'Diesel',      icon:'' },
+        { name:'Mégane',  plate:'HC453LH', seats:5, type:'Électrique',  icon:'' },
+        { name:'Corolla', plate:'FX466BC', seats:5, type:'Essence',     icon:'' }
+    ];
+    for (const v of defaults) await addDoc(collection(db, 'vehicles'), v);
+    await loadVehicles();
+}
+
+function renderVehicles() {
+    document.getElementById('vehiclesGrid').innerHTML = vehicles.map(v => `
+        <div class="vehicle-card" data-id="${v.id}">
+            <div class="vehicle-header">
+                <div class="vehicle-name">${v.name}</div>
+                <div class="vehicle-badge">${v.type}</div>
+            </div>
+            <div class="vehicle-info">
+                <div class="info-item"><div class="info-label">Plaque</div><div class="info-value">${v.plate}</div></div>
+                <div class="info-item"><div class="info-label">Places</div><div class="info-value">${v.seats}</div></div>
+            </div>
+            <button class="reserve-btn">Réserver</button>
+        </div>
+    `).join('');
+
+    // Delégation d'événements
+    document.getElementById('vehiclesGrid').querySelectorAll('.vehicle-card').forEach(card => {
+        card.addEventListener('click', () => openReservationModal(card.dataset.id));
+    });
+}
+
+/* ──────────────────────────────────────────────
+   ADMIN PANEL
+   ────────────────────────────────────────────── */
+document.getElementById('btnAdmin').addEventListener('click', () => {
+    document.getElementById('adminLoginModal').classList.add('active');
+    document.getElementById('adminPassword').focus();
+});
+
+document.getElementById('btnAdminLogin').addEventListener('click', async () => {
+    const pw = document.getElementById('adminPassword').value;
+    if (await hashPassword(pw) !== ADMIN_HASH) {
+        toast('error', 'Erreur', 'Mot de passe incorrect.');
+        return;
+    }
+    document.getElementById('adminLoginModal').classList.remove('active');
+    document.getElementById('adminPassword').value = '';
+    document.getElementById('adminPanelModal').classList.add('active');
+    renderAdminVehicles();
+    toast('success', 'Connecté', 'Accès admin autorisé.');
+});
+
+document.getElementById('btnCloseAdmin').addEventListener('click', () => {
+    document.getElementById('adminPanelModal').classList.remove('active');
+});
+
+// Fermer login modal en cliquant l'arrière-plan
+document.getElementById('adminLoginModal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) {
+        e.currentTarget.classList.remove('active');
+        document.getElementById('adminPassword').value = '';
+    }
+});
+
+function renderAdminVehicles() {
+    document.getElementById('adminVehiclesList').innerHTML = vehicles.map(v => `
+        <div class="vehicle-card">
+            <div class="vehicle-header">
+                <div class="vehicle-name">${v.name}</div>
+                <div class="vehicle-badge">${v.type}</div>
+            </div>
+            <div class="vehicle-info">
+                <div class="info-item"><div class="info-label">Plaque</div><div class="info-value">${v.plate}</div></div>
+                <div class="info-item"><div class="info-label">Places</div><div class="info-value">${v.seats}</div></div>
+            </div>
+            <button class="delete-vehicle-btn" data-id="${v.id}">Supprimer</button>
+        </div>
+    `).join('');
+
+    document.getElementById('adminVehiclesList').querySelectorAll('.delete-vehicle-btn').forEach(btn => {
+        btn.addEventListener('click', () => deleteVehicle(btn.dataset.id));
+    });
+}
+
+document.getElementById('btnAddVehicle').addEventListener('click', async () => {
+    const name  = document.getElementById('vehicleName').value.trim();
+    const plate = document.getElementById('vehiclePlate').value.trim().toUpperCase();
+    const seats = document.getElementById('vehicleSeats').value;
+    const type  = document.getElementById('vehicleType').value;
+    if (!name || !plate || !seats || !type) { toast('warning','Champs manquants','Remplissez tous les champs.'); return; }
+
+    try {
+        await addDoc(collection(db, 'vehicles'), { name, plate, seats: parseInt(seats), type, icon: '' });
+        ['vehicleName','vehiclePlate','vehicleSeats','vehicleType'].forEach(id => {
+            const el = document.getElementById(id);
+            el.value = '';
+        });
+        await loadVehicles();
+        renderAdminVehicles();
+        toast('success', 'Véhicule ajouté', `${name} a été enregistré.`);
+    } catch (e) {
+        toast('error', 'Erreur', 'Impossible d\'ajouter le véhicule.');
+    }
+});
+
+async function deleteVehicle(id) {
+    if (!confirm('Supprimer ce véhicule ?')) return;
+    try {
+        await deleteDoc(doc(db, 'vehicles', id));
+        await loadVehicles();
+        renderAdminVehicles();
+        toast('success', 'Supprimé', 'Le véhicule a été supprimé.');
+    } catch (e) {
+        toast('error', 'Erreur', 'Impossible de supprimer.');
+    }
+}
+
+/* ──────────────────────────────────────────────
+   RESERVATION MODAL
+   ────────────────────────────────────────────── */
+function openReservationModal(vehicleId) {
+    selectedVehicle    = vehicles.find(v => v.id === vehicleId);
+    selectedStartTime  = null;
+    selectedEndTime    = null;
+    const today        = new Date().toISOString().split('T')[0];
+    document.getElementById('reservationDate').value = today;
+    document.getElementById('reservationDate').min   = today;
+    selectedDate = today;
+    document.getElementById('reservationModal').classList.add('active');
+    renderTimeSlots();
+    updateTimeSlots();
+}
+
+document.getElementById('btnCloseRes').addEventListener('click', closeReservationModal);
+document.getElementById('reservationModal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) closeReservationModal();
+});
+
+function closeReservationModal() {
+    document.getElementById('reservationModal').classList.remove('active');
+    ['employeeName','destination','motif','protectionPassword'].forEach(id => document.getElementById(id).value = '');
+    selectedVehicle = selectedStartTime = selectedEndTime = selectedDate = null;
+}
+
+document.getElementById('reservationDate').addEventListener('change', (e) => {
+    selectedDate = e.target.value;
+    selectedStartTime = selectedEndTime = null;
+    updateTimeSlots();
+});
+
+function renderTimeSlots() {
+    document.getElementById('startTimeSlots').innerHTML = TIME_SLOTS.map(t =>
+        `<div class="time-slot" data-time="${t}">${t}</div>`
+    ).join('');
+    document.getElementById('endTimeSlots').innerHTML   = TIME_SLOTS.map(t =>
+        `<div class="time-slot" data-time="${t}">${t}</div>`
+    ).join('');
+
+    // Délégation
+    document.getElementById('startTimeSlots').addEventListener('click', (e) => {
+        const slot = e.target.closest('.time-slot');
+        if (!slot || slot.classList.contains('occupied') || slot.classList.contains('disabled')) return;
+        selectStartTime(slot.dataset.time);
+    });
+    document.getElementById('endTimeSlots').addEventListener('click', (e) => {
+        const slot = e.target.closest('.time-slot');
+        if (!slot || slot.classList.contains('occupied') || slot.classList.contains('disabled')) return;
+        selectEndTime(slot.dataset.time);
+    });
+}
+
+function getOccupiedSlots(vehicleId, date) {
+    const slots = [];
+    currentReservations
+        .filter(r => r.vehicleId === vehicleId && r.date === date)
+        .forEach(r => {
+            const s = parseInt(r.startTime.split(':')[0]);
+            const e = parseInt(r.endTime.split(':')[0]);
+            for (let h = s; h < e; h++) slots.push(`${String(h).padStart(2,'0')}:00`);
+        });
+    return slots;
+}
+
+function updateTimeSlots() {
+    if (!selectedVehicle || !selectedDate) return;
+    const occupied = getOccupiedSlots(selectedVehicle.id, selectedDate);
+
+    document.querySelectorAll('#startTimeSlots .time-slot').forEach(slot => {
+        slot.classList.remove('occupied','disabled','selected');
+        if (occupied.includes(slot.dataset.time)) slot.classList.add('occupied');
+    });
+    updateEndTimeSlots();
+}
+
+function updateEndTimeSlots() {
+    if (!selectedVehicle || !selectedDate) return;
+    const occupied = getOccupiedSlots(selectedVehicle.id, selectedDate);
+
+    document.querySelectorAll('#endTimeSlots .time-slot').forEach(slot => {
+        slot.classList.remove('occupied','disabled','selected');
+        if (!selectedStartTime) { slot.classList.add('disabled'); return; }
+
+        const cur   = parseInt(slot.dataset.time.split(':')[0]);
+        const start = parseInt(selectedStartTime.split(':')[0]);
+        if (cur <= start) { slot.classList.add('disabled'); return; }
+
+        // Check if any hour between start and cur is occupied
+        for (let h = start; h < cur; h++) {
+            if (occupied.includes(`${String(h).padStart(2,'0')}:00`)) { slot.classList.add('disabled'); return; }
+        }
+    });
+}
+
+function selectStartTime(time) {
+    selectedStartTime = time;
+    selectedEndTime   = null;
+    document.querySelectorAll('#startTimeSlots .time-slot').forEach(s => s.classList.remove('selected'));
+    document.querySelectorAll('#endTimeSlots .time-slot').forEach(s => s.classList.remove('selected'));
+    document.querySelector(`#startTimeSlots .time-slot[data-time="${time}"]`).classList.add('selected');
+    updateEndTimeSlots();
+}
+
+function selectEndTime(time) {
+    if (time <= selectedStartTime) { toast('warning','Erreur horaire','L\'heure de retour doit être après le départ.'); return; }
+    selectedEndTime = time;
+    document.querySelectorAll('#endTimeSlots .time-slot').forEach(s => s.classList.remove('selected'));
+    document.querySelector(`#endTimeSlots .time-slot[data-time="${time}"]`).classList.add('selected');
+}
+
+document.getElementById('btnSubmitRes').addEventListener('click', async () => {
+    const name = document.getElementById('employeeName').value.trim();
+    const dest = document.getElementById('destination').value.trim();
+    const pw   = document.getElementById('protectionPassword').value;
+
+    if (!name)            { toast('warning','Champ requis','Entrez votre nom.'); return; }
+    if (!selectedStartTime || !selectedEndTime) { toast('warning','Horaires manquants','Sélectionnez les heures de départ et de retour.'); return; }
+    if (!dest)            { toast('warning','Champ requis','Entrez la destination.'); return; }
+    if (!pw)              { toast('warning','Champ requis','Créez un mot de passe.'); return; }
+
+    const reservation = {
+        vehicleId:     selectedVehicle.id,
+        vehicleName:   selectedVehicle.name,
+        vehiclePlate:  selectedVehicle.plate,
+        vehicleIcon:   selectedVehicle.icon || '',
+        employeeName:  name,
+        date:          selectedDate,
+        startTime:     selectedStartTime,
+        endTime:       selectedEndTime,
+        destination:   dest,
+        motif:         document.getElementById('motif').value.trim(),
+        passwordHash:  await hashPassword(pw),
+        createdAt:     new Date().toISOString(),
+        status:        'active'
+    };
+
+    try {
+        await addDoc(collection(db, 'reservations'), reservation);
+
+        // ── Envoyer notification push à tous les abonnés ──
+        sendPushToAll(
+            'Nouvelle réservation',
+            `${name} a réservé le ${selectedVehicle.name} (${selectedStartTime} → ${selectedEndTime})`,
+            'gmr-reservation-new'
+        );
+
+        closeReservationModal();
+        await loadReservations();
+        toast('success', 'Réservation confirmée', `${selectedVehicle.name} réservé de ${selectedStartTime} à ${selectedEndTime}.`);
+    } catch (e) {
+        console.error(e);
+        toast('error', 'Erreur', 'Impossible de créer la réservation.');
+    }
+});
+
+/* ──────────────────────────────────────────────
+   RESERVATIONS — load / display
+   ────────────────────────────────────────────── */
+async function loadReservations() {
+    try {
+        const q    = query(collection(db, 'reservations'), orderBy('date', 'desc'));
+        const snap = await getDocs(q);
+        currentReservations = [];
+        snap.forEach(d => currentReservations.push({ id: d.id, ...d.data() }));
+        currentReservations = currentReservations.filter(r => r.status === 'active');
+        currentReservations.sort((a, b) => a.date !== b.date ? b.date.localeCompare(a.date) : b.startTime.localeCompare(a.startTime));
+        renderReservations();
+    } catch (e) {
+        console.error(e);
+        document.getElementById('reservationsTimeline').innerHTML = `
+            <div class="empty-state"><div class="empty-state-icon">⚠</div><div>Erreur de chargement</div></div>`;
+    }
+}
+
+function renderReservations() {
+    const el = document.getElementById('reservationsTimeline');
+    if (currentReservations.length === 0) {
+        el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📭</div><div>Aucune réservation active</div></div>`;
+        return;
+    }
+    el.innerHTML = currentReservations.map(r => `
+        <div class="reservation-card">
+            <div class="reservation-header">
+                <div class="reservation-vehicle-info">
+                    <div class="vehicle-icon">${r.vehicleIcon||'🚗'}</div>
+                    <div class="vehicle-details">
+                        <h3>${r.vehicleName}</h3>
+                        <span class="vehicle-plate">${r.vehiclePlate}</span>
+                    </div>
                 </div>
-                <button class="notification-close" onclick="this.parentElement.remove()">×</button>
-            `;
-            
-            container.appendChild(notification);
-            
-            // Auto-remove après 5 secondes
-            setTimeout(() => {
-                if (notification.parentElement) {
-                    notification.style.animation = 'slideInRight 0.3s ease reverse';
-                    setTimeout(() => notification.remove(), 300);
-                }
-            }, 5000);
-        }
+                <div class="reservation-status">En Cours</div>
+            </div>
+            <div class="reservation-body">
+                <div class="reservation-info-block"><h4>Salarié</h4><p>${r.employeeName}</p></div>
+                <div class="reservation-info-block"><h4>Date</h4><p>${formatDate(r.date)}</p></div>
+                <div class="reservation-info-block"><h4>Horaires</h4><div class="time-range"><span>${r.startTime}</span><span class="time-arrow">→</span><span>${r.endTime}</span></div></div>
+                <div class="reservation-info-block reservation-destination"><h4>Destination</h4><p>${r.destination}</p></div>
+                ${r.motif ? `<div class="reservation-info-block"><h4>Motif</h4><p>${r.motif}</p></div>` : ''}
+            </div>
+            <div class="reservation-actions">
+                <button class="unlock-btn" data-id="${r.id}">Terminer & Libérer</button>
+            </div>
+        </div>
+    `).join('');
 
-        // ============= GESTION DES THÈMES =============
-        window.toggleThemeDropdown = function() {
-            const dropdown = document.getElementById('themeDropdown');
-            dropdown.classList.toggle('active');
-        };
+    el.querySelectorAll('.unlock-btn').forEach(btn => {
+        btn.addEventListener('click', () => openUnlockModal(btn.dataset.id));
+    });
+}
 
-        window.changeTheme = function(themeName) {
-            document.querySelectorAll('.theme-option').forEach(opt => {
-                opt.classList.remove('active');
-            });
-            
-            document.querySelector(`[data-theme="${themeName}"]`).classList.add('active');
-            
-            if (themeName === 'corporate') {
-                document.documentElement.removeAttribute('data-theme');
-            } else {
-                document.documentElement.setAttribute('data-theme', themeName);
-            }
-            
-            localStorage.setItem('selectedTheme', themeName);
-            document.getElementById('themeDropdown').classList.remove('active');
-        };
+/* ──────────────────────────────────────────────
+   UNLOCK MODAL
+   ────────────────────────────────────────────── */
+function openUnlockModal(resId) {
+    currentUnlockRes = currentReservations.find(r => r.id === resId);
+    document.getElementById('unlockPassword').value = '';
+    document.getElementById('unlockModal').classList.add('active');
+}
 
-        // Charger le thème sauvegardé
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('selectedTheme') || 'corporate';
-            changeTheme(savedTheme);
-        });
+document.getElementById('btnCloseUnlock').addEventListener('click', () => {
+    document.getElementById('unlockModal').classList.remove('active');
+    currentUnlockRes = null;
+});
+document.getElementById('unlockModal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) { e.currentTarget.classList.remove('active'); currentUnlockRes = null; }
+});
 
-        // Fermer le dropdown en cliquant à l'extérieur
-        document.addEventListener('click', (e) => {
-            const themeSwitcher = document.querySelector('.theme-switcher');
-            if (!themeSwitcher.contains(e.target)) {
-                document.getElementById('themeDropdown').classList.remove('active');
-            }
-        });
+document.getElementById('btnSubmitUnlock').addEventListener('click', async () => {
+    const pw = document.getElementById('unlockPassword').value;
+    if (await hashPassword(pw) !== currentUnlockRes.passwordHash) {
+        toast('error', 'Erreur', 'Mot de passe incorrect.'); return;
+    }
+    try {
+        const completed = { ...currentUnlockRes, status: 'completed', completedAt: new Date().toISOString() };
+        await deleteDoc(doc(db, 'reservations', currentUnlockRes.id));
+        await addDoc(collection(db, 'reservations'), completed);
 
-        // ============= FONCTIONS UTILITAIRES =============
-        async function hashPassword(password) {
-            const msgBuffer = new TextEncoder().encode(password);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
+        // ── Notification push ──
+        sendPushToAll(
+            'Réservation terminée',
+            `Le ${currentUnlockRes.vehicleName} a été libéré par ${currentUnlockRes.employeeName}.`,
+            'gmr-reservation-done'
+        );
 
-        // ============= GESTION DES VÉHICULES =============
-        async function loadVehicles() {
-            try {
-                const querySnapshot = await getDocs(collection(db, 'vehicles'));
-                vehicles = [];
-                querySnapshot.forEach((doc) => {
-                    vehicles.push({ id: doc.id, ...doc.data() });
-                });
-                
-                if (vehicles.length === 0) {
-                    await initializeDefaultVehicles();
-                }
-                
-                displayVehicles();
-            } catch (error) {
-                console.error('Erreur:', error);
-                showNotification('error', 'Erreur', 'Impossible de charger les véhicules');
-            }
-        }
+        document.getElementById('unlockModal').classList.remove('active');
+        currentUnlockRes = null;
+        await loadReservations();
+        toast('success', 'Réservation terminée', 'Le véhicule est disponible.');
+    } catch (e) {
+        toast('error', 'Erreur', 'Impossible de terminer la réservation.');
+    }
+});
 
-        async function initializeDefaultVehicles() {
-            const defaultVehicles = [
-                { name: 'Duster', plate: 'FL024LX', seats: 2, type: 'Diesel', icon: '' },
-                { name: 'Mégane', plate: 'HC453LH', seats: 5, type: 'Électrique', icon: '' },
-                { name: 'Corolla', plate: 'FX466BC', seats: 5, type: 'Essence', icon: '' }
-            ];
+/* ──────────────────────────────────────────────
+   HISTORY
+   ────────────────────────────────────────────── */
+document.getElementById('btnHistory').addEventListener('click', async () => {
+    document.getElementById('historyModal').classList.add('active');
+    await loadHistory();
+});
+document.getElementById('btnCloseHistory').addEventListener('click', () => {
+    document.getElementById('historyModal').classList.remove('active');
+});
+document.getElementById('historyModal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) e.currentTarget.classList.remove('active');
+});
 
-            for (const vehicle of defaultVehicles) {
-                await addDoc(collection(db, 'vehicles'), vehicle);
-            }
-            
-            await loadVehicles();
-        }
+async function loadHistory() {
+    try {
+        const q    = query(collection(db, 'reservations'), orderBy('createdAt', 'desc'));
+        const snap = await getDocs(q);
+        allHistoryLogs = [];
+        snap.forEach(d => allHistoryLogs.push({ id: d.id, ...d.data() }));
+        allHistoryLogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        updateStatistics();
+        populateVehicleFilter();
+        applyFilters();
+    } catch (e) {
+        console.error(e);
+        document.getElementById('historyTableBody').innerHTML = `<tr><td colspan="7" style="text-align:center;padding:36px;color:var(--text-secondary);">Erreur</td></tr>`;
+    }
+}
 
-        function getOccupiedSlots(vehicleId, date) {
-            const occupiedSlots = [];
-            
-            currentReservations
-                .filter(res => res.vehicleId === vehicleId && res.date === date)
-                .forEach(res => {
-                    const startHour = parseInt(res.startTime.split(':')[0]);
-                    const endHour = parseInt(res.endTime.split(':')[0]);
-                    
-                    for (let h = startHour; h < endHour; h++) {
-                        occupiedSlots.push(`${h.toString().padStart(2, '0')}:00`);
-                    }
-                });
-            
-            return occupiedSlots;
-        }
+function updateStatistics() {
+    const total     = allHistoryLogs.length;
+    const active    = allHistoryLogs.filter(r => r.status === 'active').length;
+    const completed = allHistoryLogs.filter(r => r.status === 'completed').length;
 
-        function displayVehicles() {
-            const grid = document.getElementById('vehiclesGrid');
-            grid.innerHTML = vehicles.map(vehicle => {
-                return `
-                <div class="vehicle-card" onclick="openReservationModal('${vehicle.id}')">
-                    <div class="vehicle-header">
-                        <div class="vehicle-name">${vehicle.name}</div>
-                        <div class="vehicle-badge">${vehicle.type}</div>
-                    </div>
-                    <div class="vehicle-info">
-                        <div class="info-item">
-                            <div>
-                                <div class="info-label">Plaque</div>
-                                <div class="info-value">${vehicle.plate}</div>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <div>
-                                <div class="info-label">Places</div>
-                                <div class="info-value">${vehicle.seats}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="reserve-btn">Réserver</button>
-                </div>
-            `;
-            }).join('');
-        }
+    const cnt = {};
+    allHistoryLogs.forEach(l => cnt[l.vehicleName] = (cnt[l.vehicleName]||0)+1);
+    let most = '—';
+    let max  = 0;
+    Object.entries(cnt).forEach(([v,c]) => { if (c > max) { max = c; most = v; } });
 
-        function displayAdminVehicles() {
-            const list = document.getElementById('adminVehiclesList');
-            list.innerHTML = vehicles.map(vehicle => `
-                <div class="vehicle-card">
-                    <div class="vehicle-header">
-                        <div class="vehicle-name">${vehicle.name}</div>
-                        <div class="vehicle-badge">${vehicle.type}</div>
-                    </div>
-                    <div class="vehicle-info">
-                        <div class="info-item">
-                            <div>
-                                <div class="info-label">Plaque</div>
-                                <div class="info-value">${vehicle.plate}</div>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <div>
-                                <div class="info-label">Places</div>
-                                <div class="info-value">${vehicle.seats}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="delete-vehicle-btn" onclick="deleteVehicle('${vehicle.id}')">Supprimer</button>
-                </div>
-            `).join('');
-        }
+    document.getElementById('totalReservations').textContent     = total;
+    document.getElementById('activeReservations').textContent    = active;
+    document.getElementById('completedReservations').textContent = completed;
+    document.getElementById('mostUsedVehicle').textContent       = most;
+}
 
-        // ============= PANEL ADMIN =============
-        window.openAdminPanel = function() {
-            document.getElementById('adminLoginModal').classList.add('active');
-        };
+function populateVehicleFilter() {
+    const sel     = document.getElementById('filterVehicle');
+    const uniques = [...new Set(allHistoryLogs.map(l => l.vehicleName))];
+    sel.innerHTML = '<option value="">Tous</option>' + uniques.map(v => `<option value="${v}">${v}</option>`).join('');
+}
 
-        window.closeAdminLoginModal = function() {
-            document.getElementById('adminLoginModal').classList.remove('active');
-            document.getElementById('adminLoginForm').reset();
-        };
+function applyFilters() {
+    const sd  = document.getElementById('filterStartDate').value;
+    const ed  = document.getElementById('filterEndDate').value;
+    const vf  = document.getElementById('filterVehicle').value;
+    const ef  = document.getElementById('filterEmployee').value.toLowerCase();
 
-        document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const password = document.getElementById('adminPassword').value;
-            const hashedPassword = await hashPassword(password);
-            
-            if (hashedPassword !== ADMIN_PASSWORD_HASH) {
-                showNotification('error', 'Erreur', 'Mot de passe incorrect');
-                return;
-            }
-            
-            closeAdminLoginModal();
-            document.getElementById('adminPanelModal').classList.add('active');
-            displayAdminVehicles();
-            showNotification('success', 'Connecté', 'Accès admin autorisé');
-        });
+    const filtered = allHistoryLogs.filter(l => {
+        if (sd && l.date < sd) return false;
+        if (ed && l.date > ed) return false;
+        if (vf && l.vehicleName !== vf) return false;
+        if (ef && !l.employeeName.toLowerCase().includes(ef)) return false;
+        return true;
+    });
+    renderHistoryTable(filtered);
+}
 
-        window.closeAdminPanel = function() {
-            document.getElementById('adminPanelModal').classList.remove('active');
-            document.getElementById('addVehicleForm').reset();
-        };
+['filterStartDate','filterEndDate','filterVehicle','filterEmployee'].forEach(id => {
+    document.getElementById(id).addEventListener('input', applyFilters);
+    document.getElementById(id).addEventListener('change', applyFilters);
+});
 
-        document.getElementById('addVehicleForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const newVehicle = {
-                name: document.getElementById('vehicleName').value,
-                plate: document.getElementById('vehiclePlate').value.toUpperCase(),
-                seats: parseInt(document.getElementById('vehicleSeats').value),
-                type: document.getElementById('vehicleType').value,
-                icon: ''
-            };
-            
-            try {
-                await addDoc(collection(db, 'vehicles'), newVehicle);
-                document.getElementById('addVehicleForm').reset();
-                await loadVehicles();
-                displayAdminVehicles();
-                showNotification('success', 'Véhicule ajouté', `${newVehicle.name} a été ajouté avec succès`);
-            } catch (error) {
-                console.error('Erreur:', error);
-                showNotification('error', 'Erreur', 'Impossible d\'ajouter le véhicule');
-            }
-        });
+function renderHistoryTable(logs) {
+    const tbody = document.getElementById('historyTableBody');
+    if (!logs.length) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:36px;color:var(--text-secondary);">Aucune réservation trouvée</td></tr>`;
+        return;
+    }
+    tbody.innerHTML = logs.map(l => `
+        <tr>
+            <td>${formatDate(l.date)}</td>
+            <td><div style="display:flex;align-items:center;gap:8px;"><span style="font-size:1.3rem;">${l.vehicleIcon||'🚗'}</span><div><div style="font-weight:600;">${l.vehicleName}</div><div style="font-size:.75rem;color:var(--text-secondary);">${l.vehiclePlate}</div></div></div></td>
+            <td>${l.employeeName}</td>
+            <td><div style="display:flex;align-items:center;gap:6px;">${l.startTime}<span style="color:var(--primary);">→</span>${l.endTime}</div></td>
+            <td>${l.destination}</td>
+            <td>${l.motif||'—'}</td>
+            <td><span class="status-badge ${l.status==='completed'?'status-completed':'status-active'}">${l.status==='completed'?'Complétée':'En Cours'}</span></td>
+        </tr>
+    `).join('');
+}
 
-        window.deleteVehicle = async function(vehicleId) {
-            if (!confirm('Êtes-vous sûr de vouloir supprimer ce véhicule ?')) {
-                return;
-            }
-            
-            try {
-                await deleteDoc(doc(db, 'vehicles', vehicleId));
-                await loadVehicles();
-                displayAdminVehicles();
-                showNotification('success', 'Véhicule supprimé', 'Le véhicule a été supprimé');
-            } catch (error) {
-                console.error('Erreur:', error);
-                showNotification('error', 'Erreur', 'Impossible de supprimer le véhicule');
-            }
-        };
+document.getElementById('btnExport').addEventListener('click', () => {
+    const sd  = document.getElementById('filterStartDate').value;
+    const ed  = document.getElementById('filterEndDate').value;
+    const vf  = document.getElementById('filterVehicle').value;
+    const ef  = document.getElementById('filterEmployee').value.toLowerCase();
 
-        // ============= GESTION DES RÉSERVATIONS =============
-        window.openReservationModal = function(vehicleId) {
-            selectedVehicle = vehicles.find(v => v.id === vehicleId);
-            document.getElementById('reservationModal').classList.add('active');
-            
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('reservationDate').value = today;
-            document.getElementById('reservationDate').min = today;
-            
-            selectedDate = today;
-            generateTimeSlots();
-            updateTimeSlots();
-        };
+    const filtered = allHistoryLogs.filter(l => {
+        if (sd && l.date < sd) return false;
+        if (ed && l.date > ed) return false;
+        if (vf && l.vehicleName !== vf) return false;
+        if (ef && !l.employeeName.toLowerCase().includes(ef)) return false;
+        return true;
+    });
 
-        function generateTimeSlots() {
-            const startContainer = document.getElementById('startTimeSlots');
-            const endContainer = document.getElementById('endTimeSlots');
-            
-            startContainer.innerHTML = timeSlots.map(time => 
-                `<div class="time-slot" onclick="selectStartTime('${time}')">${time}</div>`
-            ).join('');
-            
-            endContainer.innerHTML = timeSlots.map(time => 
-                `<div class="time-slot" onclick="selectEndTime('${time}')">${time}</div>`
-            ).join('');
-        }
+    if (!filtered.length) { toast('warning','Aucune donnée','Aucune réservation à exporter.'); return; }
 
-        function updateTimeSlots() {
-            if (!selectedVehicle || !selectedDate) return;
-            
-            const occupiedSlots = getOccupiedSlots(selectedVehicle.id, selectedDate);
-            
-            const startSlots = document.querySelectorAll('#startTimeSlots .time-slot');
-            startSlots.forEach(slot => {
-                const time = slot.textContent;
-                slot.classList.remove('occupied', 'disabled', 'selected');
-                
-                if (occupiedSlots.includes(time)) {
-                    slot.classList.add('occupied');
-                }
-            });
-            
-            updateEndTimeSlots();
-        }
+    const headers = ['Date','Véhicule','Plaque','Salarié','Heure Début','Heure Fin','Destination','Motif','Statut'];
+    let csv = '\uFEFF' + headers.join(';') + '\n';
+    filtered.forEach(l => {
+        csv += [formatDate(l.date), l.vehicleName, l.vehiclePlate, l.employeeName, l.startTime, l.endTime, l.destination, l.motif||'-', l.status==='completed'?'Complétée':'En Cours']
+            .map(c => `"${c}"`).join(';') + '\n';
+    });
 
-        function updateEndTimeSlots() {
-            if (!selectedVehicle || !selectedDate) return;
-            
-            const occupiedSlots = getOccupiedSlots(selectedVehicle.id, selectedDate);
-            const endSlots = document.querySelectorAll('#endTimeSlots .time-slot');
-            
-            endSlots.forEach(slot => {
-                const time = slot.textContent;
-                slot.classList.remove('occupied', 'disabled', 'selected');
-                
-                if (!selectedStartTime) {
-                    slot.classList.add('disabled');
-                    return;
-                }
-                
-                const currentHour = parseInt(time.split(':')[0]);
-                const startHour = parseInt(selectedStartTime.split(':')[0]);
-                
-                if (currentHour <= startHour) {
-                    slot.classList.add('disabled');
-                    return;
-                }
-                
-                for (let h = startHour; h < currentHour; h++) {
-                    const checkTime = `${h.toString().padStart(2, '0')}:00`;
-                    if (occupiedSlots.includes(checkTime)) {
-                        slot.classList.add('disabled');
-                        return;
-                    }
-                }
-            });
-        }
+    const link = document.createElement('a');
+    link.href  = URL.createObjectURL(new Blob([csv], { type:'text/csv;charset=utf-8;' }));
+    link.download = `historique_gmr_${new Date().toISOString().split('T')[0]}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 
-        window.selectStartTime = function(time) {
-            const slot = Array.from(document.querySelectorAll('#startTimeSlots .time-slot'))
-                .find(s => s.textContent === time);
-            
-            if (slot.classList.contains('occupied')) {
-                showNotification('warning', 'Créneau occupé', 'Ce créneau n\'est pas disponible');
-                return;
-            }
-            
-            selectedStartTime = time;
-            selectedEndTime = null;
-            
-            document.querySelectorAll('#startTimeSlots .time-slot').forEach(s => {
-                s.classList.remove('selected');
-            });
-            slot.classList.add('selected');
-            
-            document.querySelectorAll('#endTimeSlots .time-slot').forEach(s => {
-                s.classList.remove('selected');
-            });
-            
-            updateEndTimeSlots();
-        };
+    toast('success', 'Export réussi', `${filtered.length} réservation(s) exportée(s).`);
+});
 
-        window.selectEndTime = function(time) {
-            const slot = Array.from(document.querySelectorAll('#endTimeSlots .time-slot'))
-                .find(s => s.textContent === time);
-            
-            if (slot.classList.contains('disabled') || slot.classList.contains('occupied')) {
-                showNotification('warning', 'Créneau occupé', 'Ce créneau n\'est pas disponible');
-                return;
-            }
-            
-            if (time <= selectedStartTime) {
-                showNotification('warning', 'Erreur horaire', 'L\'heure de retour doit être après l\'heure de départ');
-                return;
-            }
-            
-            selectedEndTime = time;
-            document.querySelectorAll('#endTimeSlots .time-slot').forEach(s => {
-                s.classList.remove('selected');
-            });
-            slot.classList.add('selected');
-        };
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const dateInput = document.getElementById('reservationDate');
-            if (dateInput) {
-                dateInput.addEventListener('change', (e) => {
-                    selectedDate = e.target.value;
-                    selectedStartTime = null;
-                    selectedEndTime = null;
-                    updateTimeSlots();
-                });
-            }
-        });
-
-        window.closeModal = function() {
-            document.getElementById('reservationModal').classList.remove('active');
-            document.getElementById('reservationForm').reset();
-            selectedVehicle = null;
-            selectedStartTime = null;
-            selectedEndTime = null;
-            selectedDate = null;
-        };
-
-        document.getElementById('reservationForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            if (!selectedStartTime || !selectedEndTime) {
-                showNotification('warning', 'Information manquante', 'Veuillez sélectionner les heures de départ et de retour');
-                return;
-            }
-
-            const password = document.getElementById('protectionPassword').value;
-            const hashedPassword = await hashPassword(password);
-            
-            const reservation = {
-                vehicleId: selectedVehicle.id,
-                vehicleName: selectedVehicle.name,
-                vehiclePlate: selectedVehicle.plate,
-                vehicleIcon: selectedVehicle.icon,
-                employeeName: document.getElementById('employeeName').value,
-                date: selectedDate,
-                startTime: selectedStartTime,
-                endTime: selectedEndTime,
-                destination: document.getElementById('destination').value,
-                motif: document.getElementById('motif').value || '',
-                passwordHash: hashedPassword,
-                createdAt: new Date().toISOString(),
-                status: 'active'
-            };
-
-            try {
-                await addDoc(collection(db, 'reservations'), reservation);
-                closeModal();
-                await loadReservations();
-                showNotification('success', 'Réservation confirmée', 
-                    `${selectedVehicle.name} réservé de ${selectedStartTime} à ${selectedEndTime}`);
-            } catch (error) {
-                console.error('Erreur:', error);
-                showNotification('error', 'Erreur', 'Impossible de créer la réservation');
-            }
-        });
-
-        async function loadReservations() {
-            const timeline = document.getElementById('reservationsTimeline');
-            const loading = timeline.querySelector('.loading');
-            
-            try {
-                if (loading) {
-                    loading.classList.add('active');
-                }
-                
-                const q = query(collection(db, 'reservations'), orderBy('date', 'desc'));
-                const querySnapshot = await getDocs(q);
-                
-                if (loading) {
-                    loading.classList.remove('active');
-                }
-                
-                currentReservations = [];
-                querySnapshot.forEach((doc) => {
-                    currentReservations.push({ id: doc.id, ...doc.data() });
-                });
-
-                // Filtrer seulement les réservations actives
-                currentReservations = currentReservations.filter(res => res.status === 'active');
-
-                currentReservations.sort((a, b) => {
-                    if (a.date !== b.date) {
-                        return b.date.localeCompare(a.date);
-                    }
-                    return b.startTime.localeCompare(a.startTime);
-                });
-
-                if (currentReservations.length === 0) {
-                    timeline.innerHTML = `
-                        <div class="empty-state">
-                            <div class="empty-state-icon">📭</div>
-                            <div>Aucune réservation active pour le moment</div>
-                        </div>
-                    `;
-                    displayVehicles();
-                    return;
-                }
-
-                timeline.innerHTML = currentReservations.map(res => `
-                    <div class="reservation-card">
-                        <div class="reservation-header">
-                            <div class="reservation-vehicle-info">
-                                <div class="vehicle-icon">${res.vehicleIcon || '🚗'}</div>
-                                <div class="vehicle-details">
-                                    <h3>${res.vehicleName}</h3>
-                                    <span class="vehicle-plate">${res.vehiclePlate}</span>
-                                </div>
-                            </div>
-                            <div class="reservation-status status-active">En Cours</div>
-                        </div>
-                        <div class="reservation-body">
-                            <div class="reservation-info-block">
-                                <h4>Salarié</h4>
-                                <p>${res.employeeName}</p>
-                            </div>
-                            <div class="reservation-info-block">
-                                <h4>Date</h4>
-                                <p>${formatDate(res.date)}</p>
-                            </div>
-                            <div class="reservation-info-block">
-                                <h4>Horaires</h4>
-                                <div class="time-range">
-                                    <span>${res.startTime}</span>
-                                    <span class="time-arrow">→</span>
-                                    <span>${res.endTime}</span>
-                                </div>
-                            </div>
-                            <div class="reservation-info-block reservation-destination">
-                                <h4>Destination</h4>
-                                <p>${res.destination}</p>
-                            </div>
-                            ${res.motif ? `
-                            <div class="reservation-info-block">
-                                <h4>Motif</h4>
-                                <p>${res.motif}</p>
-                            </div>
-                            ` : ''}
-                        </div>
-                        <div class="reservation-actions">
-                            <button class="unlock-btn" onclick="openUnlockModal('${res.id}')">
-                                Terminer & Libérer
-                            </button>
-                        </div>
-                    </div>
-                `).join('');
-
-                displayVehicles();
-            } catch (error) {
-                console.error('Erreur:', error);
-                timeline.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">⚠</div>
-                        <div>Erreur de chargement</div>
-                    </div>
-                `;
-            }
-        }
-
-        window.openUnlockModal = function(reservationId) {
-            currentUnlockReservation = currentReservations.find(r => r.id === reservationId);
-            document.getElementById('unlockModal').classList.add('active');
-            document.getElementById('unlockPassword').value = '';
-        };
-
-        window.closeUnlockModal = function() {
-            document.getElementById('unlockModal').classList.remove('active');
-            currentUnlockReservation = null;
-        };
-
-        document.getElementById('unlockForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const password = document.getElementById('unlockPassword').value;
-            const hashedPassword = await hashPassword(password);
-            
-            if (hashedPassword !== currentUnlockReservation.passwordHash) {
-                showNotification('error', 'Erreur', 'Mot de passe incorrect');
-                return;
-            }
-            
-            try {
-                // Mettre à jour le statut à 'completed' au lieu de supprimer
-                const completedReservation = {
-                    ...currentUnlockReservation,
-                    status: 'completed',
-                    completedAt: new Date().toISOString()
-                };
-                
-                // Supprimer l'ancienne et créer une nouvelle avec status completed
-                await deleteDoc(doc(db, 'reservations', currentUnlockReservation.id));
-                await addDoc(collection(db, 'reservations'), completedReservation);
-                
-                closeUnlockModal();
-                await loadReservations();
-                showNotification('success', 'Réservation terminée', 'Le véhicule est maintenant disponible');
-            } catch (error) {
-                console.error('Erreur:', error);
-                showNotification('error', 'Erreur', 'Impossible de terminer la réservation');
-            }
-        });
-
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('fr-FR', { 
-                weekday: 'long',
-                day: '2-digit', 
-                month: 'long', 
-                year: 'numeric' 
-            });
-        }
-
-        // ============= HISTORIQUE =============
-        window.openHistoryPanel = async function() {
-            document.getElementById('historyModal').classList.add('active');
-            await loadHistory();
-        };
-
-        window.closeHistoryPanel = function() {
-            document.getElementById('historyModal').classList.remove('active');
-        };
-
-        async function loadHistory() {
-            try {
-                const q = query(collection(db, 'reservations'), orderBy('createdAt', 'desc'));
-                const querySnapshot = await getDocs(q);
-                
-                allHistoryLogs = [];
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    allHistoryLogs.push({ 
-                        id: doc.id, 
-                        ...data
-                    });
-                });
-
-                allHistoryLogs.sort((a, b) => {
-                    const dateA = new Date(a.createdAt);
-                    const dateB = new Date(b.createdAt);
-                    return dateB - dateA;
-                });
-
-                updateStatistics();
-                populateVehicleFilter();
-                applyFilters();
-            } catch (error) {
-                console.error('Erreur:', error);
-                document.getElementById('historyTableBody').innerHTML = `
-                    <tr>
-                        <td colspan="7" style="text-align: center; padding: 40px; color: var(--text-secondary);">
-                            Erreur de chargement
-                        </td>
-                    </tr>
-                `;
-            }
-        }
-
-        function updateStatistics() {
-            const total = allHistoryLogs.length;
-            const active = allHistoryLogs.filter(r => r.status === 'active').length;
-            const completed = allHistoryLogs.filter(r => r.status === 'completed').length;
-
-            const vehicleCount = {};
-            allHistoryLogs.forEach(log => {
-                vehicleCount[log.vehicleName] = (vehicleCount[log.vehicleName] || 0) + 1;
-            });
-
-            let mostUsed = '-';
-            let maxCount = 0;
-            for (const [vehicle, count] of Object.entries(vehicleCount)) {
-                if (count > maxCount) {
-                    maxCount = count;
-                    mostUsed = vehicle;
-                }
-            }
-
-            document.getElementById('totalReservations').textContent = total;
-            document.getElementById('activeReservations').textContent = active;
-            document.getElementById('completedReservations').textContent = completed;
-            document.getElementById('mostUsedVehicle').textContent = mostUsed;
-        }
-
-        function populateVehicleFilter() {
-            const filterVehicle = document.getElementById('filterVehicle');
-            const uniqueVehicles = [...new Set(allHistoryLogs.map(log => log.vehicleName))];
-            
-            filterVehicle.innerHTML = '<option value="">Tous les véhicules</option>';
-            uniqueVehicles.forEach(vehicle => {
-                filterVehicle.innerHTML += `<option value="${vehicle}">${vehicle}</option>`;
-            });
-        }
-
-        function applyFilters() {
-            const startDate = document.getElementById('filterStartDate').value;
-            const endDate = document.getElementById('filterEndDate').value;
-            const vehicleFilter = document.getElementById('filterVehicle').value;
-            const employeeFilter = document.getElementById('filterEmployee').value.toLowerCase();
-
-            let filtered = allHistoryLogs.filter(log => {
-                if (startDate && log.date < startDate) return false;
-                if (endDate && log.date > endDate) return false;
-                if (vehicleFilter && log.vehicleName !== vehicleFilter) return false;
-                if (employeeFilter && !log.employeeName.toLowerCase().includes(employeeFilter)) return false;
-                return true;
-            });
-
-            displayHistoryTable(filtered);
-        }
-
-        function displayHistoryTable(logs) {
-            const tbody = document.getElementById('historyTableBody');
-            
-            if (logs.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="7" style="text-align: center; padding: 40px; color: var(--text-secondary);">
-                            Aucune réservation trouvée
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-
-            tbody.innerHTML = logs.map(log => {
-                const statusClass = log.status === 'completed' ? 'status-completed' : 'status-active';
-                const statusText = log.status === 'completed' ? 'Complétée' : 'En Cours';
-
-                return `
-                    <tr>
-                        <td>${formatDate(log.date)}</td>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <span style="font-size: 1.5rem;">${log.vehicleIcon || '🚗'}</span>
-                                <div>
-                                    <div style="font-weight: 600;">${log.vehicleName}</div>
-                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">${log.vehiclePlate}</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>${log.employeeName}</td>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <span>${log.startTime}</span>
-                                <span style="color: var(--primary-color);">→</span>
-                                <span>${log.endTime}</span>
-                            </div>
-                        </td>
-                        <td>${log.destination}</td>
-                        <td>${log.motif || '-'}</td>
-                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        window.exportToExcel = function() {
-            const startDate = document.getElementById('filterStartDate').value;
-            const endDate = document.getElementById('filterEndDate').value;
-            const vehicleFilter = document.getElementById('filterVehicle').value;
-            const employeeFilter = document.getElementById('filterEmployee').value.toLowerCase();
-
-            let filtered = allHistoryLogs.filter(log => {
-                if (startDate && log.date < startDate) return false;
-                if (endDate && log.date > endDate) return false;
-                if (vehicleFilter && log.vehicleName !== vehicleFilter) return false;
-                if (employeeFilter && !log.employeeName.toLowerCase().includes(employeeFilter)) return false;
-                return true;
-            });
-
-            if (filtered.length === 0) {
-                showNotification('warning', 'Aucune donnée', 'Aucune réservation à exporter avec ces filtres');
-                return;
-            }
-
-            const headers = ['Date', 'Véhicule', 'Plaque', 'Salarié', 'Heure Début', 'Heure Fin', 'Destination', 'Motif', 'Statut'];
-            const rows = filtered.map(log => {
-                const statusText = log.status === 'completed' ? 'Complétée' : 'En Cours';
-                return [
-                    formatDate(log.date),
-                    log.vehicleName,
-                    log.vehiclePlate,
-                    log.employeeName,
-                    log.startTime,
-                    log.endTime,
-                    log.destination,
-                    log.motif || '-',
-                    statusText
-                ];
-            });
-
-            let csvContent = '\uFEFF';
-            csvContent += headers.join(';') + '\n';
-            rows.forEach(row => {
-                csvContent += row.map(cell => `"${cell}"`).join(';') + '\n';
-            });
-
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            
-            const dateStr = new Date().toISOString().split('T')[0];
-            link.setAttribute('href', url);
-            link.setAttribute('download', `historique_gmr_${dateStr}.csv`);
-            link.style.visibility = 'hidden';
-            
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
-            showNotification('success', 'Export réussi', `${filtered.length} réservations exportées`);
-        };
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const filterInputs = ['filterStartDate', 'filterEndDate', 'filterVehicle', 'filterEmployee'];
-            filterInputs.forEach(id => {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.addEventListener('change', applyFilters);
-                    element.addEventListener('input', applyFilters);
-                }
-            });
-        });
-
-        // ============= INITIALISATION =============
-        loadVehicles();
-        loadReservations();
-        
-        setInterval(loadReservations, 30000);
-    </script>
+/* ──────────────────────────────────────────────
+   BOOT
+   ────────────────────────────────────────────── */
+loadVehicles();
+loadReservations();
+setInterval(loadReservations, 28000);
+initPushNotifications();
+</script>
 </body>
 </html>
