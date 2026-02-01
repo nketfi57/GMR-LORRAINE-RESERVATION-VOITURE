@@ -5,23 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GMR Lorraine - Réservation Véhicules</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0f172a">
+    <meta name="theme-color" content="#0084ff">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* ============================================================
-           RESET & BASE
-           ============================================================ */
         *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* ============================================================
-           THEME SYSTEM — 7 refined professional palettes
-           ============================================================ */
         :root {
-            /* ── Corporate Steel (default) ── */
             --bg-primary:    #0a0e1a;
             --bg-secondary:  #111827;
             --bg-tertiary:   #1c2434;
@@ -40,7 +33,6 @@
             --glass:         rgba(17,24,39,.7);
         }
 
-        /* ── Slate Office ── */
         [data-theme="slate"] {
             --bg-primary:    #f0f2f5;
             --bg-secondary:  #ffffff;
@@ -60,7 +52,6 @@
             --glass:         rgba(255,255,255,.88);
         }
 
-        /* ── Midnight Ink ── */
         [data-theme="midnight"] {
             --bg-primary:    #060b16;
             --bg-secondary:  #0d1520;
@@ -80,7 +71,6 @@
             --glass:         rgba(13,21,32,.8);
         }
 
-        /* ── Charcoal Gold ── */
         [data-theme="gold"] {
             --bg-primary:    #111110;
             --bg-secondary:  #1a1a18;
@@ -100,7 +90,6 @@
             --glass:         rgba(26,26,24,.82);
         }
 
-        /* ── Deep Teal ── */
         [data-theme="teal"] {
             --bg-primary:    #031a1a;
             --bg-secondary:  #062626;
@@ -120,7 +109,6 @@
             --glass:         rgba(6,38,38,.82);
         }
 
-        /* ── Wine & Stone ── */
         [data-theme="wine"] {
             --bg-primary:    #1a1012;
             --bg-secondary:  #241518;
@@ -140,7 +128,6 @@
             --glass:         rgba(36,21,24,.82);
         }
 
-        /* ── Arctic ── */
         [data-theme="arctic"] {
             --bg-primary:    #f1f5f9;
             --bg-secondary:  #ffffff;
@@ -160,19 +147,35 @@
             --glass:         rgba(255,255,255,.9);
         }
 
-        /* ============================================================
-           TYPOGRAPHY & BODY
-           ============================================================ */
+        [data-theme="rte"] {
+            --bg-primary:    #f8fcff;
+            --bg-secondary:  #ffffff;
+            --bg-tertiary:   #eef7ff;
+            --card-bg:       rgba(255,255,255,.95);
+            --border-color:  rgba(0,132,255,.12);
+            --primary:       #0084ff;
+            --secondary:     #33a0ff;
+            --accent:        #66b8ff;
+            --success:       #00c851;
+            --warning:       #ffbb33;
+            --danger:        #ff4444;
+            --text-primary:  #1a2332;
+            --text-secondary:#5a7a99;
+            --glow:          rgba(0,132,255,.2);
+            --shadow:        rgba(0,132,255,.08);
+            --glass:         rgba(255,255,255,.95);
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
-            transition: background .4s ease, color .4s ease;
+            transition: background .5s cubic-bezier(0.4, 0, 0.2, 1), 
+                        color .5s cubic-bezier(0.4, 0, 0.2, 1);
             -webkit-font-smoothing: antialiased;
         }
 
-        /* subtle ambient gradient */
         body::before {
             content: '';
             position: fixed;
@@ -183,6 +186,7 @@
             opacity: .06;
             pointer-events: none;
             z-index: 0;
+            transition: opacity .5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .container {
@@ -193,9 +197,6 @@
             padding: 24px 20px;
         }
 
-        /* ============================================================
-           PUSH-NOTIFICATION BANNER  (requests permission)
-           ============================================================ */
         .push-banner {
             position: fixed;
             bottom: 0; left: 0; right: 0;
@@ -209,7 +210,7 @@
             gap: 16px;
             box-shadow: 0 -4px 24px rgba(0,0,0,.3);
             transform: translateY(100%);
-            transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+            transition: transform .6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .push-banner.visible { transform: translateY(0); }
         .push-banner__icon { font-size: 1.6rem; flex-shrink: 0; }
@@ -226,22 +227,23 @@
             letter-spacing: .6px;
             text-transform: uppercase;
             cursor: pointer;
-            transition: opacity .2s, transform .15s;
+            transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform .3s cubic-bezier(0.34, 1.56, 0.64, 1);
             flex-shrink: 0;
         }
-        .push-banner__btn:hover { opacity: .85; transform: scale(1.03); }
+        .push-banner__btn:hover { 
+            opacity: .85; 
+            transform: scale(1.05); 
+        }
         .push-banner__dismiss {
             background: none; border: none;
             color: var(--text-secondary);
             font-size: 1.3rem; cursor: pointer;
-            transition: color .2s;
+            transition: color .3s cubic-bezier(0.4, 0, 0.2, 1);
             flex-shrink: 0;
         }
         .push-banner__dismiss:hover { color: var(--text-primary); }
 
-        /* ============================================================
-           TOAST NOTIFICATIONS  (in-page)
-           ============================================================ */
         .toast-wrap {
             position: fixed;
             top: 24px; right: 24px;
@@ -264,7 +266,7 @@
             border-radius: 12px;
             padding: 16px 18px;
             box-shadow: 0 8px 32px var(--shadow);
-            animation: toastIn .35s cubic-bezier(.34,1.56,.64,1) forwards;
+            animation: toastIn .5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
             position: relative;
             overflow: hidden;
         }
@@ -299,24 +301,21 @@
             color: var(--text-secondary);
             font-size: 1.1rem; cursor: pointer;
             line-height: 1;
-            transition: color .2s;
+            transition: color .3s cubic-bezier(0.4, 0, 0.2, 1);
             flex-shrink: 0;
         }
         .toast__close:hover { color: var(--text-primary); }
-        .toast.out { animation: toastOut .25s ease forwards; }
+        .toast.out { animation: toastOut .4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 
         @keyframes toastIn {
-            from { opacity: 0; transform: translateX(110%); }
-            to   { opacity: 1; transform: translateX(0); }
+            from { opacity: 0; transform: translateX(110%) scale(0.9); }
+            to   { opacity: 1; transform: translateX(0) scale(1); }
         }
         @keyframes toastOut {
-            from { opacity: 1; transform: translateX(0); max-height: 200px; margin-bottom: 10px; }
-            to   { opacity: 0; transform: translateX(110%); max-height: 0; margin-bottom: 0; padding: 0; }
+            from { opacity: 1; transform: translateX(0) scale(1); max-height: 200px; margin-bottom: 10px; }
+            to   { opacity: 0; transform: translateX(110%) scale(0.9); max-height: 0; margin-bottom: 0; padding: 0; }
         }
 
-        /* ============================================================
-           THEME SWITCHER
-           ============================================================ */
         .theme-rail {
             position: fixed;
             top: 24px; left: 24px;
@@ -331,10 +330,20 @@
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
             box-shadow: 0 4px 16px var(--shadow);
-            transition: transform .2s, box-shadow .2s;
+            transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        box-shadow .35s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .theme-toggle:hover { transform: scale(1.06); box-shadow: 0 6px 22px var(--glow); }
-        .theme-toggle svg { width: 20px; height: 20px; stroke: var(--text-primary); fill: none; stroke-width: 1.8; }
+        .theme-toggle:hover { 
+            transform: scale(1.1) rotate(15deg); 
+            box-shadow: 0 6px 22px var(--glow); 
+        }
+        .theme-toggle svg { 
+            width: 20px; height: 20px; 
+            stroke: var(--text-primary); 
+            fill: none; 
+            stroke-width: 1.8;
+            transition: stroke .3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
         .theme-panel {
             position: absolute;
@@ -348,13 +357,14 @@
             backdrop-filter: blur(18px);
             opacity: 0;
             pointer-events: none;
-            transform: translateY(-6px);
-            transition: opacity .22s, transform .22s;
+            transform: translateY(-10px) scale(0.95);
+            transition: opacity .35s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform .35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .theme-panel.open {
             opacity: 1;
             pointer-events: auto;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
         .theme-panel__label {
             font-size: .7rem;
@@ -369,22 +379,35 @@
             padding: 9px 10px;
             border-radius: 9px;
             cursor: pointer;
-            transition: background .18s;
+            transition: background .25s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform .25s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1.5px solid transparent;
         }
-        .theme-row:hover { background: var(--card-bg); }
-        .theme-row.active { border-color: var(--primary); background: var(--card-bg); }
+        .theme-row:hover { 
+            background: var(--card-bg); 
+            transform: translateX(3px);
+        }
+        .theme-row.active { 
+            border-color: var(--primary); 
+            background: var(--card-bg); 
+        }
         .theme-row__swatch {
             width: 28px; height: 28px;
             border-radius: 7px;
             border: 1.5px solid var(--border-color);
             flex-shrink: 0;
+            transition: transform .25s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .theme-row__name { font-size: .82rem; font-weight: 600; color: var(--text-primary); }
+        .theme-row:hover .theme-row__swatch {
+            transform: scale(1.1);
+        }
+        .theme-row__name { 
+            font-size: .82rem; 
+            font-weight: 600; 
+            color: var(--text-primary);
+            transition: color .25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-        /* ============================================================
-           TOP BAR  (action buttons)
-           ============================================================ */
         .topbar {
             position: fixed;
             top: 24px; right: 24px;
@@ -403,19 +426,16 @@
             cursor: pointer;
             backdrop-filter: blur(14px);
             box-shadow: 0 4px 14px var(--shadow);
-            transition: all .22s;
+            transition: all .35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .topbar__btn:hover {
             border-color: var(--primary);
             background: var(--primary);
             color: #fff;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
             box-shadow: 0 6px 20px var(--glow);
         }
 
-        /* ============================================================
-           HEADER
-           ============================================================ */
         header {
             text-align: center;
             padding: 72px 20px 44px;
@@ -431,18 +451,28 @@
             background-clip: text;
             letter-spacing: -1.5px;
             margin-bottom: 10px;
+            animation: titleFadeIn 1s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+        
+        @keyframes titleFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
         .subtitle {
             font-size: .82rem;
             color: var(--text-secondary);
             font-weight: 500;
             letter-spacing: 3.5px;
             text-transform: uppercase;
+            animation: subtitleFadeIn 1s .2s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+        
+        @keyframes subtitleFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        /* ============================================================
-           VEHICLE GRID
-           ============================================================ */
         .vehicles-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
@@ -456,11 +486,24 @@
             border-radius: 14px;
             padding: 24px;
             cursor: pointer;
-            transition: transform .25s, border-color .25s, box-shadow .25s;
+            transition: transform .4s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        border-color .4s cubic-bezier(0.4, 0, 0.2, 1), 
+                        box-shadow .4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 20px var(--shadow);
             position: relative;
             overflow: hidden;
+            animation: cardFadeIn .6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
         }
+        
+        .vehicle-card:nth-child(1) { animation-delay: .1s; }
+        .vehicle-card:nth-child(2) { animation-delay: .2s; }
+        .vehicle-card:nth-child(3) { animation-delay: .3s; }
+        
+        @keyframes cardFadeIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
         .vehicle-card::before {
             content: '';
             position: absolute;
@@ -468,12 +511,12 @@
             height: 3px;
             background: linear-gradient(90deg, var(--primary), var(--accent));
             opacity: 0;
-            transition: opacity .25s;
+            transition: opacity .4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .vehicle-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02);
             border-color: var(--primary);
-            box-shadow: 0 12px 36px var(--glow);
+            box-shadow: 0 16px 48px var(--glow);
         }
         .vehicle-card:hover::before { opacity: 1; }
 
@@ -488,6 +531,10 @@
             font-size: 1.35rem;
             font-weight: 700;
             color: var(--text-primary);
+            transition: color .3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .vehicle-card:hover .vehicle-name {
+            color: var(--primary);
         }
         .vehicle-badge {
             padding: 5px 13px;
@@ -499,6 +546,12 @@
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             color: var(--text-secondary);
+            transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .vehicle-card:hover .vehicle-badge {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
         }
         .vehicle-info {
             display: grid;
@@ -511,9 +564,13 @@
             border: 1px solid var(--border-color);
             border-radius: 9px;
             padding: 12px 14px;
-            transition: border-color .2s;
+            transition: border-color .3s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform .3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .info-item:hover { border-color: var(--primary); }
+        .info-item:hover { 
+            border-color: var(--primary); 
+            transform: scale(1.03);
+        }
         .info-label {
             font-size: .65rem;
             color: var(--text-secondary);
@@ -538,17 +595,32 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             cursor: pointer;
-            transition: transform .2s, box-shadow .2s;
+            transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        box-shadow .35s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 3px 12px var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        .reserve-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(255,255,255,.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width .6s cubic-bezier(0.4, 0, 0.2, 1), 
+                        height .6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reserve-btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
         .reserve-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px var(--glow);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px var(--glow);
         }
 
-        /* ============================================================
-           SECTION TITLE
-           ============================================================ */
         .section-title {
             font-family: 'Poppins', sans-serif;
             font-size: 1.7rem;
@@ -569,9 +641,6 @@
             background: linear-gradient(90deg, var(--primary), var(--accent));
         }
 
-        /* ============================================================
-           RESERVATION CARDS
-           ============================================================ */
         .reservation-card {
             background: var(--card-bg);
             backdrop-filter: blur(18px);
@@ -579,13 +648,15 @@
             border-radius: 14px;
             padding: 24px;
             margin-bottom: 18px;
-            transition: transform .25s, border-color .25s, box-shadow .25s;
+            transition: transform .4s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        border-color .4s cubic-bezier(0.4, 0, 0.2, 1), 
+                        box-shadow .4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 20px var(--shadow);
         }
         .reservation-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px);
             border-color: var(--primary);
-            box-shadow: 0 10px 32px var(--glow);
+            box-shadow: 0 12px 40px var(--glow);
         }
         .reservation-header {
             display: flex;
@@ -596,7 +667,13 @@
             border-bottom: 1px solid var(--border-color);
         }
         .reservation-vehicle-info { display: flex; align-items: center; gap: 14px; }
-        .vehicle-icon { font-size: 2rem; }
+        .vehicle-icon { 
+            font-size: 2rem;
+            transition: transform .3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .reservation-card:hover .vehicle-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
         .vehicle-details h3 {
             font-family: 'Poppins', sans-serif;
             font-size: 1.1rem;
@@ -620,7 +697,14 @@
             background: rgba(79,129,201,.12);
             border: 1px solid var(--primary);
             color: var(--primary);
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .6; }
+        }
+        
         .reservation-body {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -640,7 +724,16 @@
             color: var(--text-primary);
         }
         .time-range { display: flex; align-items: center; gap: 8px; font-size: .92rem; font-weight: 600; }
-        .time-arrow { color: var(--primary); }
+        .time-arrow { 
+            color: var(--primary);
+            animation: arrowSlide 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes arrowSlide {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(4px); }
+        }
+        
         .reservation-destination { grid-column: 1 / -1; }
 
         .reservation-actions {
@@ -659,29 +752,33 @@
             letter-spacing: .8px;
             text-transform: uppercase;
             cursor: pointer;
-            transition: all .22s;
+            transition: all .35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .unlock-btn:hover {
             background: var(--danger);
             color: #fff;
             box-shadow: 0 6px 18px rgba(231,76,90,.3);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
 
-        /* ============================================================
-           EMPTY STATE
-           ============================================================ */
         .empty-state {
             text-align: center;
             padding: 56px 20px;
             color: var(--text-secondary);
             font-size: .9rem;
         }
-        .empty-state-icon { font-size: 2.8rem; margin-bottom: 12px; opacity: .45; }
+        .empty-state-icon { 
+            font-size: 2.8rem; 
+            margin-bottom: 12px; 
+            opacity: .45;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
 
-        /* ============================================================
-           MODALS
-           ============================================================ */
         .modal {
             display: none;
             position: fixed; inset: 0;
@@ -694,9 +791,12 @@
         }
         .modal.active {
             display: flex;
-            animation: mIn .2s ease;
+            animation: modalFadeIn .3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        @keyframes mIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes modalFadeIn { 
+            from { opacity: 0; } 
+            to { opacity: 1; } 
+        }
 
         .modal-content {
             background: var(--bg-secondary);
@@ -707,12 +807,12 @@
             width: 100%;
             max-height: 88vh;
             overflow-y: auto;
-            animation: mUp .28s cubic-bezier(.34,1.56,.64,1);
+            animation: modalSlideUp .5s cubic-bezier(0.34, 1.56, 0.64, 1);
             box-shadow: 0 24px 60px rgba(0,0,0,.45);
         }
-        @keyframes mUp {
-            from { opacity: 0; transform: translateY(28px); }
-            to   { opacity: 1; transform: translateY(0); }
+        @keyframes modalSlideUp {
+            from { opacity: 0; transform: translateY(40px) scale(0.95); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
         }
         .modal-header {
             display: flex;
@@ -736,13 +836,24 @@
             width: 30px; height: 30px;
             display: flex; align-items: center; justify-content: center;
             border-radius: 7px;
-            transition: all .18s;
+            transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .close-btn:hover { color: var(--danger); background: var(--card-bg); }
+        .close-btn:hover { 
+            color: var(--danger); 
+            background: var(--card-bg); 
+            transform: rotate(90deg);
+        }
 
-        /* ── Form Controls ── */
-        .form-group { margin-bottom: 18px; }
-        .form-label { display: block; margin-bottom: 7px; font-weight: 600; font-size: .82rem; color: var(--text-primary); }
+        .form-group { 
+            margin-bottom: 18px;
+        }
+        .form-label { 
+            display: block; 
+            margin-bottom: 7px; 
+            font-weight: 600; 
+            font-size: .82rem; 
+            color: var(--text-primary); 
+        }
         .form-input, .form-select {
             width: 100%;
             padding: 12px 14px;
@@ -751,12 +862,15 @@
             border-radius: 9px;
             color: var(--text-primary);
             font-size: .88rem;
-            transition: border-color .2s, box-shadow .2s;
+            transition: border-color .35s cubic-bezier(0.4, 0, 0.2, 1), 
+                        box-shadow .35s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform .35s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .form-input:focus, .form-select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(79,129,201,.12);
+            box-shadow: 0 0 0 4px rgba(79,129,201,.12);
+            transform: translateY(-2px);
         }
         .form-select { cursor: pointer; }
         .form-select option { background: var(--bg-secondary); color: var(--text-primary); }
@@ -772,14 +886,31 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             cursor: pointer;
-            transition: transform .2s, box-shadow .2s;
+            transition: transform .4s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        box-shadow .4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(255,255,255,.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width .6s cubic-bezier(0.4, 0, 0.2, 1), 
+                        height .6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .submit-btn:hover::before {
+            width: 400px;
+            height: 400px;
         }
         .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px var(--glow);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px var(--glow);
         }
 
-        /* ── Time Slots ── */
         .time-slots-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(68px, 1fr));
@@ -796,20 +927,27 @@
             font-weight: 600;
             font-size: .78rem;
             color: var(--text-primary);
-            transition: all .18s;
+            transition: all .3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .time-slot:hover:not(.occupied):not(.disabled) {
             border-color: var(--primary);
             background: var(--card-bg);
-            transform: translateY(-1px);
+            transform: translateY(-3px) scale(1.05);
         }
-        .time-slot.selected { background: var(--primary); border-color: var(--primary); color: #fff; }
-        .time-slot.occupied { background: rgba(231,76,90,.08); border-color: rgba(231,76,90,.25); opacity: .5; cursor: not-allowed; }
+        .time-slot.selected { 
+            background: var(--primary); 
+            border-color: var(--primary); 
+            color: #fff;
+            box-shadow: 0 4px 12px var(--glow);
+        }
+        .time-slot.occupied { 
+            background: rgba(231,76,90,.08); 
+            border-color: rgba(231,76,90,.25); 
+            opacity: .5; 
+            cursor: not-allowed; 
+        }
         .time-slot.disabled { opacity: .28; cursor: not-allowed; }
 
-        /* ============================================================
-           ADMIN PANEL EXTRAS
-           ============================================================ */
         .admin-section-bg {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -834,17 +972,15 @@
             font-weight: 600;
             font-size: .78rem;
             cursor: pointer;
-            transition: transform .2s, box-shadow .2s;
+            transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        box-shadow .35s cubic-bezier(0.4, 0, 0.2, 1);
             margin-top: 10px;
         }
         .delete-vehicle-btn:hover {
-            transform: translateY(-1px);
+            transform: translateY(-2px);
             box-shadow: 0 5px 16px rgba(231,76,90,.35);
         }
 
-        /* ============================================================
-           HISTORY MODAL
-           ============================================================ */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -857,11 +993,25 @@
             border-radius: 11px;
             padding: 20px 14px;
             text-align: center;
-            transition: border-color .2s, transform .2s;
+            transition: border-color .35s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform .35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .stat-card:hover { border-color: var(--primary); transform: translateY(-2px); }
-        .stat-value { font-size: 1.8rem; font-weight: 900; color: var(--primary); margin-bottom: 4px; }
-        .stat-label { font-size: .68rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
+        .stat-card:hover { 
+            border-color: var(--primary); 
+            transform: translateY(-5px); 
+        }
+        .stat-value { 
+            font-size: 1.8rem; 
+            font-weight: 900; 
+            color: var(--primary); 
+            margin-bottom: 4px;
+        }
+        .stat-label { 
+            font-size: .68rem; 
+            color: var(--text-secondary); 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
 
         .filters-section {
             background: var(--card-bg);
@@ -885,10 +1035,14 @@
             letter-spacing: .8px;
             text-transform: uppercase;
             cursor: pointer;
-            transition: transform .2s, box-shadow .2s;
+            transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        box-shadow .35s cubic-bezier(0.4, 0, 0.2, 1);
             white-space: nowrap;
         }
-        .export-btn:hover { transform: translateY(-1px); box-shadow: 0 5px 16px rgba(52,195,143,.3); }
+        .export-btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 5px 16px rgba(52,195,143,.3); 
+        }
 
         .history-table-container {
             background: var(--bg-secondary);
@@ -916,8 +1070,14 @@
             color: var(--text-primary);
             font-size: .82rem;
         }
-        .history-table tbody tr { transition: background .18s; }
-        .history-table tbody tr:hover { background: var(--card-bg); }
+        .history-table tbody tr { 
+            transition: background .3s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform .3s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .history-table tbody tr:hover { 
+            background: var(--card-bg);
+            transform: translateX(3px);
+        }
         .status-badge {
             display: inline-block;
             padding: 4px 12px;
@@ -930,9 +1090,6 @@
         .status-completed { background: rgba(52,195,143,.15); border: 1px solid var(--success); color: var(--success); }
         .status-active    { background: rgba(79,129,201,.15); border: 1px solid var(--primary); color: var(--primary); }
 
-        /* ============================================================
-           RESPONSIVE
-           ============================================================ */
         @media (max-width: 768px) {
             .topbar { top: auto; bottom: 80px; right: 16px; flex-direction: column; }
             .theme-rail { top: 16px; left: 16px; }
@@ -944,27 +1101,18 @@
     </style>
 </head>
 <body>
-<!-- ============================================================
-     PUSH NOTIFICATION PERMISSION BANNER
-     ============================================================ -->
 <div class="push-banner" id="pushBanner">
     <div class="push-banner__icon">🔔</div>
     <div class="push-banner__text">
         <strong>Activer les notifications ?</strong><br>
-        Recevez une alerte en temps réel chaque fois qu'une réservation est créée ou terminée — même si cette page est fermée.
+        Recevez une alerte en temps réel chaque fois qu'une réservation est créée ou terminée.
     </div>
     <button class="push-banner__btn" id="pushAcceptBtn">Activer</button>
     <button class="push-banner__dismiss" id="pushDismissBtn">✕</button>
 </div>
 
-<!-- ============================================================
-     IN-PAGE TOAST CONTAINER
-     ============================================================ -->
 <div class="toast-wrap" id="toastWrap"></div>
 
-<!-- ============================================================
-     THEME SWITCHER
-     ============================================================ -->
 <div class="theme-rail">
     <div class="theme-toggle" id="themeToggle">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"/></svg>
@@ -974,6 +1122,10 @@
         <div class="theme-row active" data-theme="corporate">
             <div class="theme-row__swatch" style="background: linear-gradient(135deg, #0a0e1a 50%, #4f81c9 50%);"></div>
             <span class="theme-row__name">Corporate Steel</span>
+        </div>
+        <div class="theme-row" data-theme="rte">
+            <div class="theme-row__swatch" style="background: linear-gradient(135deg, #f8fcff 50%, #0084ff 50%);"></div>
+            <span class="theme-row__name">RTE Bleu Ciel</span>
         </div>
         <div class="theme-row" data-theme="slate">
             <div class="theme-row__swatch" style="background: linear-gradient(135deg, #f0f2f5 50%, #2c5282 50%);"></div>
@@ -1002,17 +1154,11 @@
     </div>
 </div>
 
-<!-- ============================================================
-     TOP BAR
-     ============================================================ -->
 <div class="topbar">
     <button class="topbar__btn" id="btnAdmin">Admin</button>
     <button class="topbar__btn" id="btnHistory">Historique</button>
 </div>
 
-<!-- ============================================================
-     MAIN CONTENT
-     ============================================================ -->
 <div class="container">
     <header>
         <h1>GMR Lorraine</h1>
@@ -1029,9 +1175,6 @@
     </div>
 </div>
 
-<!-- ============================================================
-     MODAL — Admin Login
-     ============================================================ -->
 <div id="adminLoginModal" class="modal">
     <div class="modal-content" style="max-width:400px;">
         <div class="modal-header" style="flex-direction:column;align-items:center;text-align:center;border-bottom:none;padding-bottom:0;">
@@ -1044,9 +1187,6 @@
     </div>
 </div>
 
-<!-- ============================================================
-     MODAL — Admin Panel
-     ============================================================ -->
 <div id="adminPanelModal" class="modal">
     <div class="modal-content" style="max-width:860px;">
         <div class="modal-header">
@@ -1076,9 +1216,6 @@
     </div>
 </div>
 
-<!-- ============================================================
-     MODAL — Réservation
-     ============================================================ -->
 <div id="reservationModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -1096,9 +1233,6 @@
     </div>
 </div>
 
-<!-- ============================================================
-     MODAL — Déverrouillage
-     ============================================================ -->
 <div id="unlockModal" class="modal">
     <div class="modal-content" style="max-width:420px;">
         <div class="modal-header">
@@ -1110,9 +1244,6 @@
     </div>
 </div>
 
-<!-- ============================================================
-     MODAL — Historique
-     ============================================================ -->
 <div id="historyModal" class="modal">
     <div class="modal-content" style="max-width:1100px;">
         <div class="modal-header">
@@ -1141,17 +1272,11 @@
     </div>
 </div>
 
-<!-- ============================================================
-     APPLICATION SCRIPT
-     ============================================================ -->
 <script type="module">
-import { initializeApp }                                           from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js';
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js';
-import { getMessaging, getToken, onMessage }                      from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-messaging.js';
+import { getMessaging, getToken, onMessage } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-messaging.js';
 
-/* ──────────────────────────────────────────────
-   FIREBASE INIT
-   ────────────────────────────────────────────── */
 const firebaseConfig = {
     apiKey:            "AIzaSyDDFzYGVZXmJOWy7XIOO4CmBfPvlJsWFCs",
     authDomain:        "rte-reservation-vehicule.firebaseapp.com",
@@ -1165,30 +1290,20 @@ const app  = initializeApp(firebaseConfig);
 const db   = getFirestore(app);
 const fcm  = getMessaging(app);
 
-/* ──────────────────────────────────────────────
-   VAPID KEY  — remplacez par votre clé réelle
-   dans Firebase Console > Cloud Messaging > Web Push certificates
-   ────────────────────────────────────────────── */
 const VAPID_KEY = "BOua4Jlhv2LoU2vq2uxXUrhGiEtzNt7cHT2N3HJPZ-HYLgvoYtBlV4yb8DzxrgjSS8T2gCpm8fYHIptZMpPEF60";
 
-/* ──────────────────────────────────────────────
-   PUSH NOTIFICATIONS — permission & token
-   ────────────────────────────────────────────── */
 const pushBanner   = document.getElementById('pushBanner');
 const pushAccept   = document.getElementById('pushAcceptBtn');
 const pushDismiss  = document.getElementById('pushDismissBtn');
 
 async function initPushNotifications() {
-    // Si déjà accordé, enregistrer le token silencieusement
     if (Notification.permission === 'granted') {
         await registerFCMToken();
         return;
     }
-    // Si pas encore demandé → afficher la bannière
     if (Notification.permission === 'default') {
         pushBanner.classList.add('visible');
     }
-    // Si refusé → on ne montre rien
 }
 
 pushAccept.addEventListener('click', async () => {
@@ -1210,35 +1325,28 @@ async function registerFCMToken() {
     try {
         const token = await getToken(fcm, { vapidKey: VAPID_KEY });
         if (token) {
-            // Stocker le token dans Firestore pour l'envoyer depuis un backend
             await addDoc(collection(db, 'fcm_tokens'), {
                 token:     token,
                 createdAt: new Date().toISOString()
             });
-            console.log('[FCM] Token enregistré :', token);
+            console.log('[FCM] Token enregistré');
         }
     } catch (err) {
         console.warn('[FCM] Impossible d\'obtenir le token :', err);
     }
 }
 
-// Messages reçus PENDANT que la page est ouverte (foreground)
 onMessage(fcm, (payload) => {
-    console.log('[FCM Foreground]', payload);
     const title = payload.notification?.title || 'GMR Lorraine';
     const body  = payload.notification?.body  || '';
 
-    // Déterminer le type de toast
     let type = 'info';
-    if (body.toLowerCase().includes('nouvelle réservation')) type = 'success';
-    if (body.toLowerCase().includes('terminée') || body.toLowerCase().includes('libéré')) type = 'warning';
+    if (body.toLowerCase().includes('nouvelle')) type = 'success';
+    if (body.toLowerCase().includes('terminée')) type = 'warning';
 
     toast(type, title, body);
 });
 
-/* ──────────────────────────────────────────────
-   TOAST SYSTEM  (in-page)
-   ────────────────────────────────────────────── */
 const toastWrap = document.getElementById('toastWrap');
 const ICONS = { success: '✓', error: '✕', warning: '⚠', info: 'ℹ' };
 
@@ -1264,9 +1372,6 @@ function dismissToast(el) {
     el.addEventListener('animationend', () => el.remove(), { once: true });
 }
 
-/* ──────────────────────────────────────────────
-   THEME SYSTEM
-   ────────────────────────────────────────────── */
 const themeToggle = document.getElementById('themeToggle');
 const themePanel  = document.getElementById('themePanel');
 const themeRows   = document.querySelectorAll('.theme-row');
@@ -1294,15 +1399,11 @@ themeRows.forEach(row => {
     row.addEventListener('click', () => applyTheme(row.dataset.theme));
 });
 
-// Restaurer thème sauvegardé
 (function() {
     const saved = localStorage.getItem('gmr_theme') || 'corporate';
     applyTheme(saved);
 })();
 
-/* ──────────────────────────────────────────────
-   GLOBALS
-   ────────────────────────────────────────────── */
 let vehicles            = [];
 let currentReservations = [];
 let allHistoryLogs      = [];
@@ -1325,31 +1426,6 @@ function formatDate(s) {
     return new Date(s).toLocaleDateString('fr-FR', { weekday:'long', day:'2-digit', month:'long', year:'numeric' });
 }
 
-/* ──────────────────────────────────────────────
-   SEND PUSH TO ALL STORED TOKENS  (client-side helper)
-   In production, move this to a Cloud Function / backend.
-   Here it reads tokens from Firestore and calls the FCM HTTP v1 API.
-   ────────────────────────────────────────────── */
-async function sendPushToAll(title, body, tag) {
-    try {
-        const snap = await getDocs(collection(db, 'fcm_tokens'));
-        const tokens = [];
-        snap.forEach(d => tokens.push(d.data().token));
-
-        for (const token of tokens) {
-            // NOTE: In production use a backend (Cloud Function) to send FCM messages.
-            // Direct HTTP calls from the browser require the FCM server key, which should never be in client code.
-            // This placeholder logs the intent; wire up your backend endpoint here.
-            console.log('[FCM] Would send to token:', token, { title, body, tag });
-        }
-    } catch (e) {
-        console.warn('[FCM] sendPushToAll error:', e);
-    }
-}
-
-/* ──────────────────────────────────────────────
-   VEHICLES  — load / display
-   ────────────────────────────────────────────── */
 async function loadVehicles() {
     try {
         const snap = await getDocs(collection(db, 'vehicles'));
@@ -1388,15 +1464,11 @@ function renderVehicles() {
         </div>
     `).join('');
 
-    // Delégation d'événements
     document.getElementById('vehiclesGrid').querySelectorAll('.vehicle-card').forEach(card => {
         card.addEventListener('click', () => openReservationModal(card.dataset.id));
     });
 }
 
-/* ──────────────────────────────────────────────
-   ADMIN PANEL
-   ────────────────────────────────────────────── */
 document.getElementById('btnAdmin').addEventListener('click', () => {
     document.getElementById('adminLoginModal').classList.add('active');
     document.getElementById('adminPassword').focus();
@@ -1419,7 +1491,6 @@ document.getElementById('btnCloseAdmin').addEventListener('click', () => {
     document.getElementById('adminPanelModal').classList.remove('active');
 });
 
-// Fermer login modal en cliquant l'arrière-plan
 document.getElementById('adminLoginModal').addEventListener('click', (e) => {
     if (e.target === e.currentTarget) {
         e.currentTarget.classList.remove('active');
@@ -1480,9 +1551,6 @@ async function deleteVehicle(id) {
     }
 }
 
-/* ──────────────────────────────────────────────
-   RESERVATION MODAL
-   ────────────────────────────────────────────── */
 function openReservationModal(vehicleId) {
     selectedVehicle    = vehicles.find(v => v.id === vehicleId);
     selectedStartTime  = null;
@@ -1521,7 +1589,6 @@ function renderTimeSlots() {
         `<div class="time-slot" data-time="${t}">${t}</div>`
     ).join('');
 
-    // Délégation
     document.getElementById('startTimeSlots').addEventListener('click', (e) => {
         const slot = e.target.closest('.time-slot');
         if (!slot || slot.classList.contains('occupied') || slot.classList.contains('disabled')) return;
@@ -1569,7 +1636,6 @@ function updateEndTimeSlots() {
         const start = parseInt(selectedStartTime.split(':')[0]);
         if (cur <= start) { slot.classList.add('disabled'); return; }
 
-        // Check if any hour between start and cur is occupied
         for (let h = start; h < cur; h++) {
             if (occupied.includes(`${String(h).padStart(2,'0')}:00`)) { slot.classList.add('disabled'); return; }
         }
@@ -1620,14 +1686,6 @@ document.getElementById('btnSubmitRes').addEventListener('click', async () => {
 
     try {
         await addDoc(collection(db, 'reservations'), reservation);
-
-        // ── Envoyer notification push à tous les abonnés ──
-        sendPushToAll(
-            'Nouvelle réservation',
-            `${name} a réservé le ${selectedVehicle.name} (${selectedStartTime} → ${selectedEndTime})`,
-            'gmr-reservation-new'
-        );
-
         closeReservationModal();
         await loadReservations();
         toast('success', 'Réservation confirmée', `${selectedVehicle.name} réservé de ${selectedStartTime} à ${selectedEndTime}.`);
@@ -1637,9 +1695,6 @@ document.getElementById('btnSubmitRes').addEventListener('click', async () => {
     }
 });
 
-/* ──────────────────────────────────────────────
-   RESERVATIONS — load / display
-   ────────────────────────────────────────────── */
 async function loadReservations() {
     try {
         const q    = query(collection(db, 'reservations'), orderBy('date', 'desc'));
@@ -1692,9 +1747,6 @@ function renderReservations() {
     });
 }
 
-/* ──────────────────────────────────────────────
-   UNLOCK MODAL
-   ────────────────────────────────────────────── */
 function openUnlockModal(resId) {
     currentUnlockRes = currentReservations.find(r => r.id === resId);
     document.getElementById('unlockPassword').value = '';
@@ -1719,13 +1771,6 @@ document.getElementById('btnSubmitUnlock').addEventListener('click', async () =>
         await deleteDoc(doc(db, 'reservations', currentUnlockRes.id));
         await addDoc(collection(db, 'reservations'), completed);
 
-        // ── Notification push ──
-        sendPushToAll(
-            'Réservation terminée',
-            `Le ${currentUnlockRes.vehicleName} a été libéré par ${currentUnlockRes.employeeName}.`,
-            'gmr-reservation-done'
-        );
-
         document.getElementById('unlockModal').classList.remove('active');
         currentUnlockRes = null;
         await loadReservations();
@@ -1735,9 +1780,6 @@ document.getElementById('btnSubmitUnlock').addEventListener('click', async () =>
     }
 });
 
-/* ──────────────────────────────────────────────
-   HISTORY
-   ────────────────────────────────────────────── */
 document.getElementById('btnHistory').addEventListener('click', async () => {
     document.getElementById('historyModal').classList.add('active');
     await loadHistory();
@@ -1861,9 +1903,6 @@ document.getElementById('btnExport').addEventListener('click', () => {
     toast('success', 'Export réussi', `${filtered.length} réservation(s) exportée(s).`);
 });
 
-/* ──────────────────────────────────────────────
-   BOOT
-   ────────────────────────────────────────────── */
 loadVehicles();
 loadReservations();
 setInterval(loadReservations, 28000);
