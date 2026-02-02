@@ -1793,7 +1793,7 @@ document.getElementById('btnSubmitRes').addEventListener('click', async () => {
         await addDoc(collection(db, 'reservations'), reservation);
         closeReservationModal();
         await loadReservations();
-        toast('success', 'Véhicule réservé ✅', `${selectedVehicle.name} réservé avec succès de ${selectedStartTime} à ${selectedEndTime}`);
+        toast('success', 'Réservation confirmée', `${selectedVehicle.name} réservé de ${selectedStartTime} à ${selectedEndTime}.`);
     } catch (e) {
         console.error(e);
         toast('error', 'Erreur', 'Impossible de créer la réservation.');
