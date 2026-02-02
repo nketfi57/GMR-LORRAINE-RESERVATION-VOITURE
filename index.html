@@ -1459,9 +1459,8 @@ onMessage(fcm, (payload) => {
 const toastWrap = document.getElementById('toastWrap');
 const ICONS = { success: '✓', error: '✕', warning: '⚠', info: 'ℹ' };
 
-function toast(type, title, msg) {function toast(type, title, msg) {
-    if (window.soundSystem) window.soundSystem.play(type);
-    // 🔊 NOUVEAU : Jouer le son
+function toast(type, title, msg) {
+    // 🔊 Jouer le son
     if (window.soundSystem) {
         window.soundSystem.play(type);
     }
@@ -1479,15 +1478,12 @@ function toast(type, title, msg) {function toast(type, title, msg) {
     el.querySelector('.toast__close').addEventListener('click', () => dismissToast(el));
     toastWrap.appendChild(el);
     
-    // 🎊 NOUVEAU : Ajouter des confettis pour les succès
+    // 🎊 Ajouter des confettis pour les succès
     if (type === 'success' && window.createConfetti) {
         const rect = toastWrap.getBoundingClientRect();
         createConfetti(rect.right - 50, rect.top + 50);
     }
- if (type === 'success' && window.createConfetti) {
-        const rect = toastWrap.getBoundingClientRect();
-        createConfetti(rect.right - 50, rect.top + 50);
-    }   
+    
     setTimeout(() => dismissToast(el), 5200);
 }
 }
