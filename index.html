@@ -1773,6 +1773,11 @@ document.getElementById('btnSubmitRes').addEventListener('click', async () => {
     if (!dest)            { toast('warning','Champ requis','Entrez la destination.'); return; }
     if (!pw)              { toast('warning','Champ requis','Créez un mot de passe.'); return; }
 
+
+    const vehicleName = selectedVehicle.name;
+    const startTime = selectedStartTime;
+    const endTime = selectedEndTime;
+
     const reservation = {
         vehicleId:     selectedVehicle.id,
         vehicleName:   selectedVehicle.name,
@@ -1793,7 +1798,8 @@ document.getElementById('btnSubmitRes').addEventListener('click', async () => {
         await addDoc(collection(db, 'reservations'), reservation);
         closeReservationModal();
         await loadReservations();
-        toast('success', 'Réservation confirmée', `${selectedVehicle.name} réservé de ${selectedStartTime} à ${selectedEndTime}.`);
+        // 🎉 Utiliser les variables sauvegardées au lieu de selectedVehicle
+        toast('success', 'Véhicule réservé ✅', `${vehicleName} réservé avec succès de ${startTime} à ${endTime}`);
     } catch (e) {
         console.error(e);
         toast('error', 'Erreur', 'Impossible de créer la réservation.');
