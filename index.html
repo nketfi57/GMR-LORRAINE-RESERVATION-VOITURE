@@ -1181,19 +1181,15 @@
 @keyframes iconSpin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
-}
-
-@media (max-width: 768px) {
-    .topbar { top: auto; bottom: 80px; right: 16px; flex-direction: column; }
-    .theme-rail { top: 16px; left: 16px; }
-    .toast-wrap { top: 16px; right: 16px; left: 16px; max-width: none; width: auto; }
-    .vehicles-grid { grid-template-columns: 1fr; }
-    .modal-content { padding: 22px; }
-    header { padding: 56px 16px 32px; }
-}
+} @media (max-width: 768px) {
+            .topbar { top: auto; bottom: 80px; right: 16px; flex-direction: column; }
+            .theme-rail { top: 16px; left: 16px; }
+            .toast-wrap { top: 16px; right: 16px; left: 16px; max-width: none; width: auto; }
+            .vehicles-grid { grid-template-columns: 1fr; }
+            .modal-content { padding: 22px; }
+            header { padding: 56px 16px 32px; }
+        }
     </style>
-    
-    <link rel="stylesheet" href="enhancements.css">
 </head>
 <body>
 <div class="push-banner" id="pushBanner">
@@ -1460,11 +1456,6 @@ const toastWrap = document.getElementById('toastWrap');
 const ICONS = { success: '✓', error: '✕', warning: '⚠', info: 'ℹ' };
 
 function toast(type, title, msg) {
-    // 🔊 Jouer le son
-    if (window.soundSystem) {
-        window.soundSystem.play(type);
-    }
-    
     const el = document.createElement('div');
     el.className = `toast ${type}`;
     el.innerHTML = `
@@ -1477,15 +1468,7 @@ function toast(type, title, msg) {
     `;
     el.querySelector('.toast__close').addEventListener('click', () => dismissToast(el));
     toastWrap.appendChild(el);
-    
-    // 🎊 Ajouter des confettis pour les succès
-    if (type === 'success' && window.createConfetti) {
-        const rect = toastWrap.getBoundingClientRect();
-        createConfetti(rect.right - 50, rect.top + 50);
-    }
-    
     setTimeout(() => dismissToast(el), 5200);
-}
 }
 
 function dismissToast(el) {
@@ -1811,16 +1794,16 @@ document.getElementById('btnSubmitRes').addEventListener('click', async () => {
         status:        'active'
     };
 
-   try {
-    await addDoc(collection(db, 'reservations'), reservation);
-    
-    // 🎵 NOUVEAU : Son de réservation
-    if (window.soundSystem) window.soundSystem.play('reservation');
-    
-    closeReservationModal();
-    await loadReservations();
-    toast('success', 'Véhicule réservé ✅', `${vehicleName} réservé avec succès de ${startTime} à ${endTime}`);
-}
+    try {
+        await addDoc(collection(db, 'reservations'), reservation);
+        closeReservationModal();
+        await loadReservations();
+        // 🎉 Utiliser les variables sauvegardées au lieu de selectedVehicle
+        toast('success', 'Véhicule réservé ✅', `${vehicleName} réservé avec succès de ${startTime} à ${endTime}`);
+    } catch (e) {
+        console.error(e);
+        toast('error', 'Erreur', 'Impossible de créer la réservation.');
+    }
 });
 
 async function loadReservations() {
@@ -1894,20 +1877,16 @@ document.getElementById('btnSubmitUnlock').addEventListener('click', async () =>
     if (await hashPassword(pw) !== currentUnlockRes.passwordHash) {
         toast('error', 'Erreur', 'Mot de passe incorrect.'); return;
     }
-try {
-    const completed = { ...currentUnlockRes, status: 'completed', completedAt: new Date().toISOString() };
-    await deleteDoc(doc(db, 'reservations', currentUnlockRes.id));
-    await addDoc(collection(db, 'reservations'), completed);
-    if (window.soundSystem) window.soundSystem.play('reservation');
-    
-    // 🎵 NOUVEAU : Son de déverrouillage
-    if (window.soundSystem) window.soundSystem.play('unlock');
-    
-    document.getElementById('unlockModal').classList.remove('active');
-    currentUnlockRes = null;
-    await loadReservations();
-    toast('success', 'Réservation terminée', 'Le véhicule est disponible.');
-} catch (e) {
+    try {
+        const completed = { ...currentUnlockRes, status: 'completed', completedAt: new Date().toISOString() };
+        await deleteDoc(doc(db, 'reservations', currentUnlockRes.id));
+        await addDoc(collection(db, 'reservations'), completed);
+
+        document.getElementById('unlockModal').classList.remove('active');
+        currentUnlockRes = null;
+        await loadReservations();
+        toast('success', 'Réservation terminée', 'Le véhicule est disponible.');
+    } catch (e) {
         toast('error', 'Erreur', 'Impossible de terminer la réservation.');
     }
 });
